@@ -542,7 +542,11 @@ class HomeView extends GetView<HomeController> {
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), label: "Profile"),
         ],
-        onTap: (_) {},
+        onTap: (index) {
+          if (index == 1) {
+            Get.toNamed(Routes.CART);
+          }
+        },
       ),
     );
   }

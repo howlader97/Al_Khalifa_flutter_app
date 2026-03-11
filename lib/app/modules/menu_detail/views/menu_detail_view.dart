@@ -175,16 +175,7 @@ class MenuDetailView extends GetView<MenuDetailController> {
             const SizedBox(width: 20),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {
-                  Get.snackbar(
-                    "Success", 
-                    "${controller.menu['title']} added to cart",
-                    backgroundColor: const Color(0xFF00B14F),
-                    colorText: Colors.white,
-                    snackPosition: SnackPosition.BOTTOM,
-                    margin: const EdgeInsets.all(16),
-                  );
-                },
+                onPressed: controller.addToCart,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF00B14F),
                   foregroundColor: Colors.white,

@@ -1,8 +1,13 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/providers/product_provider.dart';
+import '../../../data/providers/cart_provider.dart';
 
 class ProductDetailController extends GetxController {
   final ProductProvider _provider = ProductProvider();
+  final CartProvider _cartProvider = CartProvider();
 
   var isLoading = false.obs;
   var product = <String, dynamic>{}.obs;
@@ -52,5 +57,22 @@ class ProductDetailController extends GetxController {
       return (v['price'] as num?)?.toDouble() ?? (product['price'] as num?)?.toDouble() ?? 0.0;
     }
     return (product['price'] as num?)?.toDouble() ?? 0.0;
+  }
+
+  Future<void> addToCart() async {
+    try {
+      isLoading.value = true;
+      await _cartProvider.addToCart(
+        productId: product['id'],
+        variationId: selectedVariationId.value,
+        quantity: quantity.value,
+      );
+      Get.snackbar('Success', '${product['name']} added to cart',
+          backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

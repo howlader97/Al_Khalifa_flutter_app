@@ -24,6 +24,10 @@ import '../modules/all_menus/bindings/all_menus_binding.dart';
 import '../modules/all_menus/views/all_menus_view.dart';
 import '../modules/menu_detail/bindings/menu_detail_binding.dart';
 import '../modules/menu_detail/views/menu_detail_view.dart';
+import '../modules/cart/bindings/cart_binding.dart';
+import '../modules/cart/views/cart_view.dart';
+import '../modules/checkout/bindings/checkout_binding.dart';
+import '../modules/checkout/views/checkout_view.dart';
 
 part 'app_routes.dart';
 
@@ -92,6 +96,16 @@ class AppPages {
       name: _Paths.MENU_DETAIL,
       page: () => const MenuDetailView(),
       binding: MenuDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.CART,
+      page: () => const CartView(),
+      binding: CartBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECKOUT,
+      page: () => const CheckoutView(),
+      binding: CheckoutBinding(),
     ),
   ];
 }

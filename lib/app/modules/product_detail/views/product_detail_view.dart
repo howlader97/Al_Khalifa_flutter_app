@@ -247,9 +247,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
           const SizedBox(width: 16),
           Expanded(
             child: ElevatedButton(
-              onPressed: () {
-                Get.snackbar("Cart", "${controller.product['name']} added to cart!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
-              },
+              onPressed: controller.addToCart,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF00B14F),
                 foregroundColor: Colors.white,
