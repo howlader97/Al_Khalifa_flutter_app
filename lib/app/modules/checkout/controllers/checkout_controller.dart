@@ -4,6 +4,7 @@ import '../../cart/controllers/cart_controller.dart';
 import '../../../data/models/cart_model.dart';
 import '../../../data/models/delivery_area_model.dart';
 import '../../../data/providers/delivery_area_provider.dart';
+import '../../../data/providers/delivery_fee_provider.dart';
 
 class CheckoutController extends GetxController {
   final cartController = Get.find<CartController>();
@@ -21,11 +22,27 @@ class CheckoutController extends GetxController {
 
   List<DeliveryAreaModel> _deliveryAreas = [];
   final _deliveryAreaProvider = DeliveryAreaProvider();
+  final _deliveryFeeProvider = DeliveryFeeProvider();
+
+  final dynamicDeliveryFee = 0.0.obs;
+  final isLoadingFee = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchDeliveryAreas();
+    fetchDeliveryFee();
+  }
+
+  Future<void> fetchDeliveryFee() async {
+    isLoadingFee.value = true;
+    try {
+      dynamicDeliveryFee.value = await _deliveryFeeProvider.getLatestDeliveryFee();
+    } catch (e) {
+      print("Error fetching delivery fee: $e");
+    } finally {
+      isLoadingFee.value = false;
+    }
   }
 
   Future<void> fetchDeliveryAreas() async {
@@ -65,7 +82,7 @@ class CheckoutController extends GetxController {
   CartResponse? get cart => cartController.cartResponse.value;
 
   double get subtotal => cart?.subtotal ?? 0.0;
-  double get deliveryFee => cart?.shipping ?? 0.0;
+  double get deliveryFee => dynamicDeliveryFee.value > 0 ? dynamicDeliveryFee.value : (cart?.shipping ?? 0.0);
   double get total => subtotal + deliveryFee;
 
   void setPaymentMethod(String method) {
