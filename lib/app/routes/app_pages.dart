@@ -10,12 +10,20 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
+import '../modules/product_detail/bindings/product_detail_binding.dart';
+import '../modules/product_detail/views/product_detail_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/all_products/bindings/all_products_binding.dart';
+import '../modules/all_products/views/all_products_view.dart';
+import '../modules/all_menus/bindings/all_menus_binding.dart';
+import '../modules/all_menus/views/all_menus_view.dart';
+import '../modules/menu_detail/bindings/menu_detail_binding.dart';
+import '../modules/menu_detail/views/menu_detail_view.dart';
 
 part 'app_routes.dart';
 
@@ -64,6 +72,26 @@ class AppPages {
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_DETAIL,
+      page: () => const ProductDetailView(),
+       binding: ProductDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_PRODUCTS,
+      page: () => const AllProductsView(),
+      binding: AllProductsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_MENUS,
+      page: () => const AllMenusView(),
+       binding: AllMenusBinding(),
+    ),
+    GetPage(
+      name: _Paths.MENU_DETAIL,
+      page: () => const MenuDetailView(),
+      binding: MenuDetailBinding(),
     ),
   ];
 }

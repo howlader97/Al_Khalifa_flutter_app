@@ -105,3 +105,24 @@ class MessageResponse {
     message: json['message'] ?? '',
   );
 }
+
+class GoogleLoginRequest {
+  String email;
+  String firstName;
+  String lastName;
+  String idToken;
+
+  GoogleLoginRequest({
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.idToken,
+  });
+
+  Map<String, dynamic> toJson() => {
+    'email': email,
+    'first_name': firstName,
+    'last_name': lastName,
+    'id_token': idToken,
+  };
+}

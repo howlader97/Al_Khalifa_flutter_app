@@ -97,11 +97,10 @@ class LoginView extends GetView<LoginController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   _socialIcon('assets/img/google.png'), // Need to ensure these exist or use placeholders
-                   const SizedBox(width: 20),
-                   _socialIcon('assets/img/apple.png'),
-                   const SizedBox(width: 20),
-                   _socialIcon('assets/img/facebook.png'),
+                   GestureDetector(
+                     onTap: controller.signInWithGoogle,
+                     child: _socialIcon('assets/img/google.png'),
+                   ),
                 ],
               ),
               const SizedBox(height: 30),
@@ -139,7 +138,7 @@ class LoginView extends GetView<LoginController> {
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Icon(Icons.star_outline), // Placeholder since I don't have the icons yet
+      child: Image.asset(path,height: 20,width: 20,), // Placeholder since I don't have the icons yet
     );
   }
 }

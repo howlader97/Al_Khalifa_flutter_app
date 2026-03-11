@@ -4,7 +4,7 @@ import '../models/auth_models.dart';
 
 class AuthProvider {
   // Use 10.0.2.2 for Android Emulator to access host localhost
-  static const String baseUrl = 'http://10.0.2.2:8000/auth'; 
+  static const String baseUrl = 'http://10.0.2.2:8001/auth';
 
   Future<TokenResponse> login(LoginRequest data) async {
     final response = await http.post(
@@ -73,6 +73,20 @@ class AuthProvider {
       return MessageResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(jsonDecode(response.body)['detail'] ?? 'Failed to reset password');
+    }
+  }
+
+  Future<TokenResponse> googleLogin(GoogleLoginRequest data) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/google-login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return TokenResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception(jsonDecode(response.body)['detail'] ?? 'Google login failed');
     }
   }
 }

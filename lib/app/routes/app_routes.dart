@@ -10,6 +10,10 @@ abstract class Routes {
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const OTP = _Paths.OTP;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+   static const PRODUCT_DETAIL = _Paths.PRODUCT_DETAIL;
+  static const ALL_PRODUCTS = _Paths.ALL_PRODUCTS;
+   static const ALL_MENUS = _Paths.ALL_MENUS;
+  static const MENU_DETAIL = _Paths.MENU_DETAIL;
 }
 
 abstract class _Paths {
@@ -22,4 +26,8 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const OTP = '/otp';
   static const RESET_PASSWORD = '/reset-password';
+   static const PRODUCT_DETAIL = '/product-detail';
+  static const ALL_PRODUCTS = '/all-products';
+   static const ALL_MENUS = '/all-menus';
+  static const MENU_DETAIL = '/menu-detail';
 }
