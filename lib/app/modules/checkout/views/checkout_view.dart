@@ -32,9 +32,13 @@ class CheckoutView extends GetView<CheckoutController> {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _buildDropdownField("District", controller.districtController.text, controller.districts)),
+                Expanded(child: Obx(() => _buildDropdownField("City", controller.cityController.text, controller.cities, (val) => controller.setCity(val!)))),
                 const SizedBox(width: 16),
-                Expanded(child: _buildDropdownField("City", controller.cityController.text, controller.cities)),
+                Expanded(child: Obx(() => _buildDropdownField("Location", controller.locationController.text, controller.locations, (val) {
+                  controller.locationController.text = val!;
+                  // Force UI update
+                  controller.locations.refresh();
+                }))),
               ],
             ),
             const SizedBox(height: 16),
@@ -71,7 +75,7 @@ class CheckoutView extends GetView<CheckoutController> {
     );
   }
 
-  Widget _buildDropdownField(String label, String value, RxList<String> items) {
+  Widget _buildDropdownField(String label, String value, RxList<String> items, Function(String?) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,12 +90,9 @@ class CheckoutView extends GetView<CheckoutController> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               isExpanded: true,
-              value: value,
+              value: items.contains(value) ? value : (items.isNotEmpty ? items.first : null),
               items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 14)))).toList(),
-              onChanged: (val) {
-                if (label == "District") controller.districtController.text = val!;
-                else controller.cityController.text = val!;
-              },
+              onChanged: onChanged,
             ),
           ),
         ),
