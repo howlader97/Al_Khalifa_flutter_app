@@ -45,6 +45,8 @@ class CheckoutView extends GetView<CheckoutController> {
             _buildInputField("Address", "Example: House no 32,street,etc", controller.addressController),
             const SizedBox(height: 16),
             _buildInputField("Special Instructions", "enter your full address", controller.specialInstructionsController),
+            const SizedBox(height: 16),
+            _buildInputField("Phone Number", "+8011-1111 1111", controller.phoneController),
             const SizedBox(height: 24),
             _buildSectionTitle("Payment Method"),
             const SizedBox(height: 12),
@@ -223,19 +225,25 @@ class CheckoutView extends GetView<CheckoutController> {
   Widget _buildCheckoutButton() {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
-        onPressed: controller.processCheckout,
+      child: Obx(() => ElevatedButton(
+        onPressed: controller.isPlacingOrder.value ? null : controller.processCheckout,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF006437),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           padding: const EdgeInsets.symmetric(vertical: 16),
           elevation: 0,
         ),
-        child: const Text(
-          "Checkout",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-      ),
+        child: controller.isPlacingOrder.value
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+              )
+            : const Text(
+                "Checkout",
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+      )),
     );
   }
 }
