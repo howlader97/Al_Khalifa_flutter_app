@@ -39,13 +39,12 @@ class ProductDetailView extends GetView<ProductDetailController> {
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                              const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                              const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                              const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                              const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                              const SizedBox(width: 4),
-                              const Text("(5.00)", style: TextStyle(color: Colors.grey, fontSize: 13)),
+                              _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0, size: 18),
+                              const SizedBox(width: 8),
+                              Text(
+                                "(${(product['rating'] as num?)?.toStringAsFixed(2) ?? '5.00'}) ${product['review_count'] ?? 0} Reviews",
+                                style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 16),
@@ -259,6 +258,24 @@ class ProductDetailView extends GetView<ProductDetailController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRatingStars(double rating, {double size = 12}) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = (rating - fullStars) >= 0.5;
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        if (index < fullStars) {
+          return Icon(Icons.star, color: const Color(0xFFFFC107), size: size);
+        } else if (index == fullStars && hasHalfStar) {
+          return Icon(Icons.star_half, color: const Color(0xFFFFC107), size: size);
+        } else {
+          return Icon(Icons.star_outline, color: Colors.grey[400], size: size);
+        }
+      }),
     );
   }
 }

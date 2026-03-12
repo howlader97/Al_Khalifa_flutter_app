@@ -133,16 +133,11 @@ class AllProductsView extends GetView<AllProductsController> {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Color(0xFFFFC107), size: 14),
-                      const SizedBox(width: 2),
-                      const Text(
-                        "5.00",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
+                      _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0, size: 14),
                       const SizedBox(width: 4),
-                      const Text(
-                        "(5.00)",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      Text(
+                        "(${(product['review_count'] ?? 0)})",
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],
                   ),
@@ -161,6 +156,24 @@ class AllProductsView extends GetView<AllProductsController> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildRatingStars(double rating, {double size = 12}) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = (rating - fullStars) >= 0.5;
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        if (index < fullStars) {
+          return Icon(Icons.star, color: const Color(0xFFFFC107), size: size);
+        } else if (index == fullStars && hasHalfStar) {
+          return Icon(Icons.star_half, color: const Color(0xFFFFC107), size: size);
+        } else {
+          return Icon(Icons.star_outline, color: Colors.grey[400], size: size);
+        }
+      }),
     );
   }
 }

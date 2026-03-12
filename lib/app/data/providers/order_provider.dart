@@ -37,4 +37,19 @@ class OrderProvider {
       throw Exception(jsonDecode(response.body)['detail'] ?? 'Failed to fetch orders');
     }
   }
+
+  Future<void> submitReview(Map<String, dynamic> reviewData, String token) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8001/reviews/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(reviewData),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception(jsonDecode(response.body)['detail'] ?? 'Failed to submit review');
+    }
+  }
 }

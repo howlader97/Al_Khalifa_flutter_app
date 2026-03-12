@@ -358,20 +358,11 @@ class HomeView extends GetView<HomeController> {
                       overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),
                   Row(
-                    children: const [
-                      Icon(Icons.star,
-                          color: Color(0xFFFFC107), size: 14),
-                      Icon(Icons.star,
-                          color: Color(0xFFFFC107), size: 14),
-                      Icon(Icons.star,
-                          color: Color(0xFFFFC107), size: 14),
-                      Icon(Icons.star,
-                          color: Color(0xFFFFC107), size: 14),
-                      Icon(Icons.star,
-                          color: Color(0xFFFFC107), size: 14),
-                      SizedBox(width: 2),
-                      Text(" (5.00)",
-                          style: TextStyle(
+                    children: [
+                      _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0),
+                      const SizedBox(width: 4),
+                      Text("(${(product['review_count'] ?? 0)})",
+                          style: const TextStyle(
                               fontSize: 11, color: Colors.grey)),
                     ],
                   ),
@@ -486,11 +477,12 @@ class HomeView extends GetView<HomeController> {
                     overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
                 Row(
-                  children: const [
-                    Icon(Icons.star, color: Color(0xFFFFC107), size: 14),
-                    Text(" (5.00)",
+                  children: [
+                    _buildRatingStars((menu['rating'] as num?)?.toDouble() ?? 5.0),
+                    const SizedBox(width: 4),
+                    Text("(${(menu['review_count'] ?? 0)})",
                         style:
-                            TextStyle(fontSize: 11, color: Colors.grey)),
+                            const TextStyle(fontSize: 11, color: Colors.grey)),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -545,9 +537,29 @@ class HomeView extends GetView<HomeController> {
         onTap: (index) {
           if (index == 1) {
             Get.toNamed(Routes.CART);
+          } else if (index == 2) {
+            Get.toNamed(Routes.MY_ORDERS);
           }
         },
       ),
+    );
+  }
+
+  Widget _buildRatingStars(double rating, {double size = 12}) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = (rating - fullStars) >= 0.5;
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        if (index < fullStars) {
+          return Icon(Icons.star, color: const Color(0xFFFFC107), size: size);
+        } else if (index == fullStars && hasHalfStar) {
+          return Icon(Icons.star_half, color: const Color(0xFFFFC107), size: size);
+        } else {
+          return Icon(Icons.star_outline, color: Colors.grey[400], size: size);
+        }
+      }),
     );
   }
 }

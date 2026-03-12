@@ -133,13 +133,13 @@ class AllMenusView extends GetView<AllMenusController> {
                         ),
                       ),
                     ),
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
-                        SizedBox(width: 4),
+                        _buildRatingStars((menu['rating'] as num?)?.toDouble() ?? 5.0, size: 18),
+                        const SizedBox(width: 6),
                         Text(
-                          "4.8",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                          "(${(menu['review_count'] ?? 0)})",
+                          style: const TextStyle(color: Colors.grey, fontSize: 13),
                         ),
                       ],
                     ),
@@ -194,6 +194,24 @@ class AllMenusView extends GetView<AllMenusController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildRatingStars(double rating, {double size = 12}) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = (rating - fullStars) >= 0.5;
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        if (index < fullStars) {
+          return Icon(Icons.star, color: const Color(0xFFFFC107), size: size);
+        } else if (index == fullStars && hasHalfStar) {
+          return Icon(Icons.star_half, color: const Color(0xFFFFC107), size: size);
+        } else {
+          return Icon(Icons.star_outline, color: Colors.grey[400], size: size);
+        }
+      }),
     );
   }
 }
