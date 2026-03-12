@@ -96,7 +96,17 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Icon(Icons.restaurant_menu, color: Color(0xFF00B14F), size: 24),
+                            child: item['image_url'] != null && item['image_url'].isNotEmpty
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      item['image_url'],
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) => 
+                                          const Icon(Icons.restaurant_menu, color: Color(0xFF00B14F), size: 24),
+                                    ),
+                                  )
+                                : const Icon(Icons.restaurant_menu, color: Color(0xFF00B14F), size: 24),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
