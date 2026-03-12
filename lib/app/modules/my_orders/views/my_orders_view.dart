@@ -51,7 +51,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
   }
 
   Widget _buildStatusFilters() {
-    final statuses = ["ALL", "PENDING", "CONFIRMED", "DELIVERED", "CANCELLED"];
+    final statuses = ["ALL", "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"];
     return Container(
       height: 60,
       color: Colors.white,
