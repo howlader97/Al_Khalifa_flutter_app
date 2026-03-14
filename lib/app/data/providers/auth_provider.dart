@@ -4,7 +4,7 @@ import '../models/auth_models.dart';
 
 class AuthProvider {
   // Use 10.0.2.2 for Android Emulator to access host localhost
-  static const String baseUrl = 'http://10.0.2.2:8001/auth';
+  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/auth';
 
   Future<TokenResponse> login(LoginRequest data) async {
     final response = await http.post(

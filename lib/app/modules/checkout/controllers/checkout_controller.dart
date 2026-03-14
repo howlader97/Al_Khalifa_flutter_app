@@ -7,6 +7,8 @@ import '../../../data/providers/delivery_fee_provider.dart';
 import '../../../data/providers/order_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../../../data/providers/payment_provider.dart';
+import '../views/ssl_commerz_webview.dart';
 
 class CheckoutController extends GetxController {
   final cartController = Get.find<CartController>();
@@ -27,6 +29,7 @@ class CheckoutController extends GetxController {
   final _deliveryAreaProvider = DeliveryAreaProvider();
   final _deliveryFeeProvider = DeliveryFeeProvider();
   final _orderProvider = OrderProvider();
+  final _paymentProvider = PaymentProvider();
   final _storage = GetStorage();
 
   final dynamicDeliveryFee = 0.0.obs;
@@ -133,15 +136,38 @@ class CheckoutController extends GetxController {
         "payment_method": selectedPaymentMethod.value,
       };
 
-      await _orderProvider.placeOrder(orderData, token);
+      final order = await _orderProvider.placeOrder(orderData, token);
 
-      // Refresh cart since it's now empty on backend
+      if (selectedPaymentMethod.value == "Digital Payment") {
+        final paymentUrl = await _paymentProvider.initiatePayment(order['id'], token);
+        if (paymentUrl != null) {
+          Get.to(() => SSLCommerzWebView(
+            paymentUrl: paymentUrl,
+            onPaymentSuccess: () async {
+              // Payment succeeded — cart is cleared on backend. Refresh & go home.
+              await cartController.fetchCart();
+              Get.offAllNamed('/home');
+              Get.snackbar("Success", "Payment Successful!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
+            },
+            onPaymentFailed: () {
+              // Payment failed — cart is still intact on backend. Stay on checkout.
+              Get.back(); // go back to checkout screen
+              Get.snackbar("Payment Failed", "Payment was not successful. Please try again.", backgroundColor: Colors.red, colorText: Colors.white);
+            },
+            onPaymentCancelled: () {
+              // Payment cancelled — cart is still intact on backend. Stay on checkout.
+              Get.back(); // go back to checkout screen
+              Get.snackbar("Payment Cancelled", "You cancelled the payment. Your cart is still saved.", backgroundColor: Colors.orange, colorText: Colors.white);
+            },
+          ));
+          return;
+        }
+      }
+
+      // Cash payment — cart already cleared on backend, refetch and go home.
       await cartController.fetchCart();
-
       Get.snackbar("Success", "Order placed successfully!",
           backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
-      
-      // Navigate to Home or Orders screen
       Get.offAllNamed('/home');
     } catch (e) {
       Get.snackbar("Order Error", e.toString(),

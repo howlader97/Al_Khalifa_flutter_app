@@ -3,10 +3,11 @@ import 'package:http/http.dart' as http;
 import '../models/delivery_area_model.dart';
 
 class DeliveryAreaProvider {
-  static const String baseUrl = 'http://10.0.2.2:8001/delivery-areas';
+  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/delivery-areas/';
 
   Future<List<DeliveryAreaModel>> getDeliveryAreas() async {
     final response = await http.get(Uri.parse(baseUrl));
+    print("delevery area response ${response.body}, ${response.statusCode}");
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.map((json) => DeliveryAreaModel.fromJson(json)).toList();

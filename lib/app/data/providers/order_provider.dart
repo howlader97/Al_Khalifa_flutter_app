@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../providers/auth_provider.dart';
 
 class OrderProvider {
-  static const String baseUrl = 'http://10.0.2.2:8001/orders';
+  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/orders';
 
   Future<Map<String, dynamic>> placeOrder(Map<String, dynamic> orderData, String token) async {
     final response = await http.post(
@@ -40,7 +40,7 @@ class OrderProvider {
 
   Future<void> submitReview(Map<String, dynamic> reviewData, String token) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8001/reviews/'),
+      Uri.parse('https://akfoodapi.maktechlaravel.cloud/reviews/'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

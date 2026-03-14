@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class DeliveryFeeProvider {
-  static const String baseUrl = 'http://10.0.2.2:8001/delivery-fee';
+  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/delivery-fee/';
 
   Future<double> getLatestDeliveryFee() async {
     final response = await http.get(Uri.parse(baseUrl));
+    print("delevery fee response ${response.body}, ${response.statusCode}");
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       if (data.isNotEmpty) {

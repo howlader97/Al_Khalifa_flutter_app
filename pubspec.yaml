@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^2.0.9
   google_sign_in: ^6.2.1
   intl: ^0.20.2
+  webview_flutter: ^4.13.1
 
 
 

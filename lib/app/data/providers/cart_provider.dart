@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import '../models/cart_model.dart';
 
 class CartProvider {
-  static const String baseUrl = 'http://10.0.2.2:8001/cart';
+  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/cart';
   final _storage = GetStorage();
 
   String? get _token => _storage.read('token');

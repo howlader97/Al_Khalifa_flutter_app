@@ -90,8 +90,10 @@ class CheckoutView extends GetView<CheckoutController> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: DropdownButtonHideUnderline(
+
             child: DropdownButton<String>(
               isExpanded: true,
+              dropdownColor: Colors.white,
               value: items.contains(value) ? value : (items.isNotEmpty ? items.first : null),
               items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 14)))).toList(),
               onChanged: onChanged,
