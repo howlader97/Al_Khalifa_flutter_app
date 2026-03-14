@@ -93,40 +93,199 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildPromoBanner() {
+    return Obx(() {
+      if (controller.isLoadingSliders.value) {
+        return _buildShimmerLoading();
+      }
+
+      if (controller.sliders.isEmpty) {
+        return _buildStaticBanner();
+      }
+
+      return Column(
+        children: [
+          SizedBox(
+            height: 180,
+            child: PageView.builder(
+              controller: controller.pageController,
+              onPageChanged: (index) => controller.currentSliderIndex.value = index,
+              itemCount: controller.sliders.length,
+              itemBuilder: (context, index) {
+                final slider = controller.sliders[index];
+                return _buildSliderItem(slider);
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          _buildSliderIndicators(),
+        ],
+      );
+    });
+  }
+
+  Widget _buildShimmerLoading() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
-        height: 150,
+        height: 180,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: const Center(child: CircularProgressIndicator(color: Color(0xFF00B14F))),
+      ),
+    );
+  }
+
+  Widget _buildSliderItem(dynamic slider) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.network(
+              slider['image_url'],
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: const Color(0xFF00B14F),
+                child: const Icon(Icons.image_not_supported, color: Colors.white, size: 50),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.8),
+                    Colors.black.withOpacity(0.3),
+                    Colors.transparent,
+                  ],
+                  stops: const [0.0, 0.4, 1.0],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (slider['title'] != null && (slider['title'] as String).isNotEmpty)
+                    Text(
+                      slider['title'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  if (slider['link_url'] != null && (slider['link_url'] as String).isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF00B14F),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        "Order Now",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSliderIndicators() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        controller.sliders.length,
+        (index) => Obx(() => AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          height: 6,
+          width: controller.currentSliderIndex.value == index ? 20 : 6,
+          decoration: BoxDecoration(
+            color: controller.currentSliderIndex.value == index
+                ? const Color(0xFF00B14F)
+                : Colors.grey[300],
+            borderRadius: BorderRadius.circular(3),
+          ),
+        )),
+      ),
+    );
+  }
+
+  Widget _buildStaticBanner() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        height: 180,
         width: double.infinity,
         decoration: BoxDecoration(
           color: const Color(0xFF00B14F),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF00B14F).withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Share the love",
                     style: TextStyle(
-                        color: Colors.white.withOpacity(0.85), fontSize: 12)),
+                        color: Colors.white.withOpacity(0.85), fontSize: 13, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 8),
                 const Text(
                   "Enjoy\nDiscount Food",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                      height: 1.2),
+                      fontSize: 26,
+                      height: 1.1),
                 ),
               ],
             ),
             Positioned(
-              right: 0,
-              bottom: 0,
-              child: Icon(Icons.lunch_dining,
-                  size: 80, color: Colors.white.withOpacity(0.3)),
+              right: -10,
+              bottom: -10,
+              child: Opacity(
+                opacity: 0.2,
+                child: Icon(Icons.lunch_dining, size: 100, color: Colors.white),
+              ),
             ),
           ],
         ),
