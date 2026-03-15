@@ -10,8 +10,8 @@ class LoginController extends GetxController {
   final AuthProvider authProvider;
   LoginController({required this.authProvider});
 
-  final emailController = TextEditingController(text: "customer2@example.com");
-  final passwordController = TextEditingController(text: "password123");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   
   final isLoading = false.obs;
   final isPasswordVisible = false.obs;

@@ -1,7 +1,13 @@
-import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import '../../../data/providers/auth_provider.dart';
 import '../../../routes/app_pages.dart';
+import 'package:get/get.dart';
+
 
 class SplashController extends GetxController {
+  final _storage = GetStorage();
+  final _authProvider = AuthProvider();
+
   @override
   void onInit() {
     super.onInit();
@@ -9,9 +15,24 @@ class SplashController extends GetxController {
   }
 
   void _navigateToNext() async {
-    await Future.delayed(const Duration(seconds: 3));
-    // For now, always go to onboarding. 
-    // Later we can check if user is logged in.
-    Get.offAllNamed(Routes.ONBOARDING);
+    await Future.delayed(const Duration(seconds: 2));
+    
+    final token = _storage.read('access_token');
+    
+    if (token == null) {
+      Get.offAllNamed(Routes.ONBOARDING);
+      return;
+    }
+
+    try {
+      // Validate token by fetching user profile
+      await _authProvider.getMe(token);
+      // If successful, go to dashboard
+      Get.offAllNamed(Routes.MAIN_DASHBOARD);
+    } catch (e) {
+      print("Token validation failed: $e");
+      // If token is invalid/expired, go to login
+      Get.offAllNamed(Routes.LOGIN);
+    }
   }
 }
