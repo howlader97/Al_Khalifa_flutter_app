@@ -382,74 +382,144 @@ class HomeView extends GetView<HomeController> {
     return Obx(() {
       if (controller.isLoadingMenus.value) {
         return const SizedBox(
-            height: 105,
+            height: 120,
             child: Center(
-                child:
-                    CircularProgressIndicator(color: Color(0xFF00B14F))));
+                child: CircularProgressIndicator(color: Color(0xFF00B14F))));
       }
       final menus = controller.partyMenus;
       if (menus.isEmpty) {
         return const SizedBox(
-            height: 105,
+            height: 120,
             child: Center(
                 child: Text("No cuisines",
                     style: TextStyle(color: Colors.grey, fontSize: 13))));
       }
-      return SizedBox(
-        height: 105.h,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          itemCount: menus.length,
-          separatorBuilder: (_, __) => SizedBox(width: 16.w),
-          itemBuilder: (context, index) {
-            final menu = menus[index]; // fields: id, title, image_url
-            final imageUrl = menu['image_url'] as String? ?? '';
-            final title = menu['title'] as String? ?? '';
-            return SizedBox(
-              width: 70.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                    Container(
-                      width: 52.r,
-                      height: 52.r,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.06),
-                              blurRadius: 8.r)
-                        ],
-                      ),
-                      child: imageUrl.isNotEmpty
-                          ? ClipOval(
-                              child: Image.network(
-                                imageUrl,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Icon(Icons.restaurant_menu,
-                                        color: const Color(0xFF00B14F), size: 24.r),
-                              ),
-                            )
-                          : Icon(Icons.restaurant_menu,
-                              color: const Color(0xFF00B14F), size: 24.r),
-                    ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    title,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 11.sp, color: Colors.black87),
+      return Column(
+        children: [
+          SizedBox(
+            height: 130.h,
+            child: PageView.builder(
+              controller: controller.cuisinePageController,
+              onPageChanged: (index) =>
+                  controller.currentCuisineIndex.value = index,
+              itemCount: menus.length,
+              itemBuilder: (context, index) {
+                final menu = menus[index];
+                final imageUrl = menu['image_url'] as String? ?? '';
+                final title = menu['title'] as String? ?? '';
+                return GestureDetector(
+                  onTap: () => Get.toNamed(
+                    Routes.MENU_DETAIL,
+                    arguments: {'id': menu['id']},
                   ),
-                ],
-              ),
-            );
-          },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.r),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.06),
+                            blurRadius: 10.r,
+                            offset: const Offset(0, 4))
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(16.r)),
+                          child: imageUrl.isNotEmpty
+                              ? Image.network(
+                                  imageUrl,
+                                  width: 120.w,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                    width: 120.w,
+                                    color: Colors.grey[100],
+                                    child: Icon(Icons.restaurant_menu,
+                                        color: const Color(0xFF00B14F),
+                                        size: 32.r),
+                                  ),
+                                )
+                              : Container(
+                                  width: 120.w,
+                                  color: Colors.grey[100],
+                                  child: Icon(Icons.restaurant_menu,
+                                      color: const Color(0xFF00B14F),
+                                      size: 32.r),
+                                ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(12.r),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
+                                ),
+                                SizedBox(height: 8.h),
+                                Row(
+                                  children: [
+                                    Icon(Icons.star, color: Colors.amber, size: 16.r),
+                                    SizedBox(width: 4.w),
+                                    Text(
+                                      "4.5", // Hardcoded for design, can be dynamic
+                                      style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text("Free Delivery", 
+                                      style: TextStyle(color: const Color(0xFF00B14F), fontSize: 11.sp, fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 12.h),
+          _buildCuisineIndicators(),
+        ],
+      );
+    });
+  }
+
+  Widget _buildCuisineIndicators() {
+    return Obx(() {
+      final count = controller.partyMenus.length;
+      if (count <= 1) return const SizedBox.shrink();
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          count,
+          (index) => Container(
+            margin: EdgeInsets.symmetric(horizontal: 3.w),
+            height: 6.h,
+            width: controller.currentCuisineIndex.value == index ? 18.w : 6.w,
+            decoration: BoxDecoration(
+              color: controller.currentCuisineIndex.value == index
+                  ? const Color(0xFF00B14F)
+                  : Colors.grey[300],
+              borderRadius: BorderRadius.circular(3.r),
+            ),
+          ),
         ),
       );
     });

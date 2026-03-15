@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   var sliders = <dynamic>[].obs;
   var homeSections = <dynamic>[].obs;
   var currentSliderIndex = 0.obs;
+  var currentCuisineIndex = 0.obs;
   var selectedCategoryId = RxnString();
   var searchQuery = "".obs;
 
@@ -34,13 +35,16 @@ class HomeController extends GetxController {
 
   final int selectedBottomIndex = 0;
   final PageController pageController = PageController();
+  final PageController cuisinePageController = PageController();
   Timer? _sliderTimer;
+  Timer? _cuisineSliderTimer;
 
   @override
   void onInit() {
     super.onInit();
     fetchAll();
     _startSliderTimer();
+    _startCuisineSliderTimer();
   }
 
   void _startSliderTimer() {
@@ -59,10 +63,28 @@ class HomeController extends GetxController {
     });
   }
 
+  void _startCuisineSliderTimer() {
+    _cuisineSliderTimer?.cancel();
+    _cuisineSliderTimer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (partyMenus.isNotEmpty) {
+        int nextIndex = (currentCuisineIndex.value + 1) % partyMenus.length;
+        if (cuisinePageController.hasClients) {
+          cuisinePageController.animateToPage(
+            nextIndex,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
+
   @override
   void onClose() {
     _sliderTimer?.cancel();
+    _cuisineSliderTimer?.cancel();
     pageController.dispose();
+    cuisinePageController.dispose();
     super.onClose();
   }
 
