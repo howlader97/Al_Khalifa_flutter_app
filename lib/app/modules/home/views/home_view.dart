@@ -20,49 +20,58 @@ class HomeView extends GetView<HomeController> {
             Expanded(
               child: Obx(() {
                 if (controller.searchQuery.value.isNotEmpty) {
-                  return _buildSearchResults(context);
+                  return RefreshIndicator(
+                    onRefresh: () => controller.fetchAll(),
+                    color: const Color(0xFF00B14F),
+                    child: _buildSearchResults(context),
+                  );
                 }
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16),
-                      _buildPromoBanner(),
-                      const SizedBox(height: 24),
-                      _buildSectionHeader("Our Cuisines", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
-                      const SizedBox(height: 12),
-                      _buildCategoryList(),
-                      const SizedBox(height: 16),
-                      // Dynamic Product Sections
-                      Column(
-                        children: controller.homeSections.map((section) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 24),
-                              _buildSectionHeader(
-                                section['name'],
-                                onSeeAll: () => Get.toNamed(
-                                  Routes.ALL_PRODUCTS,
-                                  arguments: {"section_id": section['id'], "title": section['name']},
+                return RefreshIndicator(
+                  onRefresh: () => controller.fetchAll(),
+                  color: const Color(0xFF00B14F),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16),
+                        _buildPromoBanner(),
+                        const SizedBox(height: 24),
+                        _buildSectionHeader("Our Cuisines", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
+                        const SizedBox(height: 12),
+                        _buildCategoryList(),
+                        const SizedBox(height: 16),
+                        // Dynamic Product Sections
+                        Column(
+                          children: controller.homeSections.map((section) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                _buildSectionHeader(
+                                  section['name'],
+                                  onSeeAll: () => Get.toNamed(
+                                    Routes.ALL_PRODUCTS,
+                                    arguments: {"section_id": section['id'], "title": section['name']},
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 12),
-                              _buildProductGrid(context, 
-                                  products: section['products'], 
-                                  limit: 4),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 24),
-                      _buildSectionHeader("All Products", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS, arguments: {"title": "All Products"})),
-                      const SizedBox(height: 12),
-                      _buildProductGrid(context, 
-                          products: controller.filteredProducts, 
-                          limit: 6),
-                    ],
+                                const SizedBox(height: 12),
+                                _buildProductGrid(context, 
+                                    products: section['products'], 
+                                    limit: 4),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(height: 24),
+                        _buildSectionHeader("All Products", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS, arguments: {"title": "All Products"})),
+                        const SizedBox(height: 12),
+                        _buildProductGrid(context, 
+                            products: controller.filteredProducts, 
+                            limit: 6),
+                      ],
+                    ),
                   ),
                 );
               }),

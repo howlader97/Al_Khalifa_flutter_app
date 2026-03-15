@@ -45,17 +45,22 @@ class ProfileView extends GetView<ProfileController> {
           return const Center(child: Text("User not found"));
         }
 
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20.h),
-              _buildProfileHeader(user),
-              SizedBox(height: 30.h),
-              _buildProfileMenu(),
-              SizedBox(height: 30.h),
-              _buildLogoutButton(),
-              SizedBox(height: 40.h),
-            ],
+        return RefreshIndicator(
+          onRefresh: () => controller.loadUserProfile(),
+          color: const Color(0xFF00B14F),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: 20.h),
+                _buildProfileHeader(user),
+                SizedBox(height: 30.h),
+                _buildProfileMenu(),
+                SizedBox(height: 30.h),
+                _buildLogoutButton(),
+                SizedBox(height: 40.h),
+              ],
+            ),
           ),
         );
       }),

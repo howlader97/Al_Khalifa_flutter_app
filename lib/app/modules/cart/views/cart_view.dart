@@ -39,19 +39,24 @@ class CartView extends GetView<CartController> {
           return _buildEmptyCart();
         }
 
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(16.r),
-                itemCount: cart.items.length,
-                itemBuilder: (context, index) {
-                  return _buildCartItem(cart.items[index]);
-                },
+        return RefreshIndicator(
+          onRefresh: () => controller.fetchCart(),
+          color: const Color(0xFF00B14F),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.all(16.r),
+                  itemCount: cart.items.length,
+                  itemBuilder: (context, index) {
+                    return _buildCartItem(cart.items[index]);
+                  },
+                ),
               ),
-            ),
-            _buildOrderSummary(),
-          ],
+              _buildOrderSummary(),
+            ],
+          ),
         );
       }),
     );
