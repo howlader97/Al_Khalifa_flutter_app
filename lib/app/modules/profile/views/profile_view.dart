@@ -125,9 +125,15 @@ class ProfileView extends GetView<ProfileController> {
             Get.toNamed(Routes.MY_ORDERS);
           }),
           _buildMenuItem(Icons.delete_outline, "Delete Account", () => controller.goToDeleteAccount(), isDestructive: true),
-          _buildMenuItem(Icons.info_outline, "About Us", () {}),
-          _buildMenuItem(Icons.privacy_tip_outlined, "Privacy & Policy", () {}),
-          _buildMenuItem(Icons.description_outlined, "Terms & Conditions", () {}),
+          _buildMenuItem(Icons.info_outline, "About Us", () {
+            Get.toNamed(Routes.CMS_PAGE, arguments: {'slug': 'about-us'});
+          }),
+          _buildMenuItem(Icons.privacy_tip_outlined, "Privacy & Policy", () {
+            Get.toNamed(Routes.CMS_PAGE, arguments: {'slug': 'privacy-policy'});
+          }),
+          _buildMenuItem(Icons.description_outlined, "Terms & Conditions", () {
+            Get.toNamed(Routes.CMS_PAGE, arguments: {'slug': 'terms-conditions'});
+          }),
         ],
       ),
     );

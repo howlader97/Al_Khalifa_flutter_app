@@ -56,11 +56,10 @@ class HomeView extends GetView<HomeController> {
         children: [
           Row(
             children: const [
-              Icon(Icons.location_on, color: Color(0xFF00B14F), size: 18),
+              Icon(Icons.location_on, color: Color(0xFF00B14F), size: 22),
               SizedBox(width: 4),
-              Text("Nurpur Union",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-              Icon(Icons.keyboard_arrow_down, size: 20, color: Colors.black54),
+              Text("AL-Khalifa Restaurant\n& Convention Hall",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10))
             ],
           ),
           IconButton(

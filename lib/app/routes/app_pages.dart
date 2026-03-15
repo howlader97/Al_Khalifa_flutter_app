@@ -8,6 +8,8 @@ import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
+import '../modules/cms_page/bindings/cms_page_binding.dart';
+import '../modules/cms_page/views/cms_page_view.dart';
 import '../modules/delete_account/bindings/delete_account_binding.dart';
 import '../modules/delete_account/views/delete_account_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
@@ -141,6 +143,11 @@ class AppPages {
       name: _Paths.DELETE_ACCOUNT,
       page: () => const DeleteAccountView(),
       binding: DeleteAccountBinding(),
+    ),
+    GetPage(
+      name: _Paths.CMS_PAGE,
+      page: () => const CmsPageView(),
+      binding: CmsPageBinding(),
     ),
   ];
 }

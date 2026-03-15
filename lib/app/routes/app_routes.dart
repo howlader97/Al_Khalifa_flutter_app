@@ -21,6 +21,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const DELETE_ACCOUNT = _Paths.DELETE_ACCOUNT;
+  static const CMS_PAGE = _Paths.CMS_PAGE;
 }
 
 abstract class _Paths {
@@ -44,4 +45,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const EDIT_PROFILE = '/edit-profile';
   static const DELETE_ACCOUNT = '/delete-account';
+  static const CMS_PAGE = '/cms-page';
 }
