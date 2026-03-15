@@ -7,7 +7,7 @@ class CartProvider {
   static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/cart';
   final _storage = GetStorage();
 
-  String? get _token => _storage.read('token');
+  String? get _token => _storage.read('access_token');
 
   Map<String, String> get _headers => {
     'Content-Type': 'application/json',

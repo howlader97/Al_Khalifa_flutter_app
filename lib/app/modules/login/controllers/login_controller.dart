@@ -38,7 +38,7 @@ class LoginController extends GetxController {
       print("login response: $response");
       
       // Save token
-      await storage.write('token', response.accessToken);
+      await storage.write('access_token', response.accessToken);
       
       Get.offAllNamed(Routes.HOME);
     } catch (e) {
@@ -76,7 +76,7 @@ class LoginController extends GetxController {
 
       final response = await authProvider.googleLogin(request);
       
-      await storage.write('token', response.accessToken);
+      await storage.write('access_token', response.accessToken);
       Get.offAllNamed(Routes.HOME);
     } catch (e) {
       Get.snackbar('Google Login Error', e.toString());

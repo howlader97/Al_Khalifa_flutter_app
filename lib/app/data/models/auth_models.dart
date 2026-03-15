@@ -126,3 +126,42 @@ class GoogleLoginRequest {
     'id_token': idToken,
   };
 }
+
+class UserRead {
+  int id;
+  String firstName;
+  String lastName;
+  String email;
+  String? phoneNumber;
+  String? district;
+  String? city;
+  String? address;
+  String? profileImgUrl;
+  String? role;
+
+  UserRead({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    this.phoneNumber,
+    this.district,
+    this.city,
+    this.address,
+    this.profileImgUrl,
+    this.role,
+  });
+
+  factory UserRead.fromJson(Map<String, dynamic> json) => UserRead(
+    id: json['id'] ?? 0,
+    firstName: json['first_name'] ?? '',
+    lastName: json['last_name'] ?? '',
+    email: json['email'] ?? '',
+    phoneNumber: json['phone_number'],
+    district: json['district'],
+    city: json['city'],
+    address: json['address'],
+    profileImgUrl: json['profile_img_url'],
+    role: json['role'],
+  );
+}

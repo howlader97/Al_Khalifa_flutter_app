@@ -117,7 +117,7 @@ class CheckoutController extends GetxController {
       return;
     }
 
-    final token = _storage.read('token');
+    final token = _storage.read('access_token');
     if (token == null) {
       Get.snackbar("Error", "Session expired. Please login again.",
           backgroundColor: Colors.red, colorText: Colors.white);

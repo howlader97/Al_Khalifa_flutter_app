@@ -698,6 +698,8 @@ class HomeView extends GetView<HomeController> {
             Get.toNamed(Routes.CART);
           } else if (index == 2) {
             Get.toNamed(Routes.MY_ORDERS);
+          } else if (index == 3) {
+            Get.toNamed(Routes.PROFILE);
           }
         },
       ),

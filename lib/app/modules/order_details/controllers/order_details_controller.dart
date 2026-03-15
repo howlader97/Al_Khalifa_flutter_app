@@ -24,7 +24,7 @@ class OrderDetailsController extends GetxController {
     
     try {
       isSubmitting.value = true;
-      final token = _storage.read('token');
+      final token = _storage.read('access_token');
       final reviewData = {
         'order_id': order.value!['id'],
         'rating': rating.value,

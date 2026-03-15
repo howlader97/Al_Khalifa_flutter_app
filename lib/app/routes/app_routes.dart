@@ -18,6 +18,9 @@ abstract class Routes {
   static const CHECKOUT = _Paths.CHECKOUT;
   static const MY_ORDERS = _Paths.MY_ORDERS;
   static const ORDER_DETAILS = _Paths.ORDER_DETAILS;
+  static const PROFILE = _Paths.PROFILE;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const DELETE_ACCOUNT = _Paths.DELETE_ACCOUNT;
 }
 
 abstract class _Paths {
@@ -30,12 +33,15 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const OTP = '/otp';
   static const RESET_PASSWORD = '/reset-password';
-   static const PRODUCT_DETAIL = '/product-detail';
+  static const PRODUCT_DETAIL = '/product-detail';
   static const ALL_PRODUCTS = '/all-products';
-   static const ALL_MENUS = '/all-menus';
+  static const ALL_MENUS = '/all-menus';
   static const MENU_DETAIL = '/menu-detail';
   static const CART = '/cart';
   static const CHECKOUT = '/checkout';
   static const MY_ORDERS = '/my-orders';
   static const ORDER_DETAILS = '/order-details';
+  static const PROFILE = '/profile';
+  static const EDIT_PROFILE = '/edit-profile';
+  static const DELETE_ACCOUNT = '/delete-account';
 }
