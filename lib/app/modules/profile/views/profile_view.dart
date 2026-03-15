@@ -1,6 +1,7 @@
-import 'package:akflutterfoodapp/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -16,18 +17,18 @@ class ProfileView extends GetView<ProfileController> {
 
         leading: Navigator.of(context).canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back, color: Colors.black, size: 24.r),
                 onPressed: () => Get.back(),
               )
             : null,
-        title: const Text(
+        title: Text(
           'Profile',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18.sp),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit_note, color: Colors.black, size: 28),
+            icon: Icon(Icons.edit_note, color: Colors.black, size: 28.r),
             onPressed: () => controller.goToEditProfile(),
           ),
         ],
@@ -47,13 +48,13 @@ class ProfileView extends GetView<ProfileController> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               _buildProfileHeader(user),
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
               _buildProfileMenu(),
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
               _buildLogoutButton(),
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
             ],
           ),
         );
@@ -67,11 +68,11 @@ class ProfileView extends GetView<ProfileController> {
         Stack(
           children: [
             Container(
-              width: 110,
-              height: 110,
+              width: 110.r,
+              height: 110.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.grey[200]!, width: 4),
+                border: Border.all(color: Colors.grey[200]!, width: 4.r),
                 image: DecorationImage(
                   image: user.profileImgUrl != null && user.profileImgUrl!.isNotEmpty
                       ? NetworkImage(user.profileImgUrl!)
@@ -86,7 +87,7 @@ class ProfileView extends GetView<ProfileController> {
               child: GestureDetector(
                 onTap: () => controller.pickImage(),
                 child: Container(
-                  padding: const EdgeInsets.all(6),
+                  padding: EdgeInsets.all(6.r),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
@@ -94,27 +95,27 @@ class ProfileView extends GetView<ProfileController> {
                       BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
                     ],
                   ),
-                  child: const Icon(Icons.camera_alt_outlined, size: 20, color: Colors.grey),
+                  child: Icon(Icons.camera_alt_outlined, size: 20.r, color: Colors.grey),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Text(
           "${user.firstName} ${user.lastName}",
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         if (user.phoneNumber != null)
           Text(
             user.phoneNumber!,
-            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+            style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
           ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(
           user.email,
-          style: TextStyle(color: Colors.grey[600], fontSize: 14),
+          style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
         ),
       ],
     );
@@ -122,7 +123,7 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget _buildProfileMenu() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
           _buildMenuItem(Icons.person_add_alt_1_outlined, "Invite Friend", () {}),
@@ -150,22 +151,22 @@ class ProfileView extends GetView<ProfileController> {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
               color: isDestructive ? Colors.red[50] : Colors.grey[100],
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(icon, color: isDestructive ? Colors.red : Colors.black87, size: 22),
+            child: Icon(icon, color: isDestructive ? Colors.red : Colors.black87, size: 22.r),
           ),
           title: Text(
             title,
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w500,
               color: isDestructive ? Colors.red[700] : Colors.black87,
             ),
           ),
-          trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+          trailing: Icon(Icons.arrow_forward_ios, size: 14.r, color: Colors.grey),
           onTap: onTap,
         ),
         Divider(color: Colors.grey[100], height: 1),
@@ -175,17 +176,17 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget _buildLogoutButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: OutlinedButton(
         onPressed: () => controller.logout(),
         style: OutlinedButton.styleFrom(
-          minimumSize: const Size(double.infinity, 50),
+          minimumSize: Size(double.infinity, 50.h),
           side: const BorderSide(color: Colors.black87),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         ),
-        child: const Text(
+        child: Text(
           "Log Out",
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16.sp),
         ),
       ),
     );

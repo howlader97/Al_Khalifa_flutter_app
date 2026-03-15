@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import '../controllers/my_orders_controller.dart';
 
@@ -11,14 +12,14 @@ class MyOrdersView extends GetView<MyOrdersController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text('My Orders', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: Text('My Orders', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18.sp)),
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.white,
         centerTitle: true,
         leading: Navigator.of(context).canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+                icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.r),
                 onPressed: () => Get.back(),
               )
             : null,
@@ -38,7 +39,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
                 onRefresh: controller.fetchOrders,
                 color: const Color(0xFF00B14F),
                 child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.r),
                   itemCount: controller.filteredOrders.length,
                   itemBuilder: (context, index) {
                     final order = controller.filteredOrders[index];
@@ -56,13 +57,13 @@ class MyOrdersView extends GetView<MyOrdersController> {
   Widget _buildStatusFilters() {
     final statuses = ["ALL", "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"];
     return Container(
-      height: 60,
+      height: 60.h,
       color: Colors.white,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         itemCount: statuses.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, __) => SizedBox(width: 8.w),
         itemBuilder: (context, index) {
           final status = statuses[index];
           return Obx(() {
@@ -70,10 +71,10 @@ class MyOrdersView extends GetView<MyOrdersController> {
             return GestureDetector(
               onTap: () => controller.filterOrders(status),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 decoration: BoxDecoration(
                   color: isSelected ? const Color(0xFF00B14F) : Colors.grey[100],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(color: isSelected ? Colors.transparent : Colors.grey[300]!),
                 ),
                 alignment: Alignment.center,
@@ -81,7 +82,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
                   status,
                   style: TextStyle(
                     color: isSelected ? Colors.white : Colors.black87,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
@@ -99,12 +100,12 @@ class MyOrdersView extends GetView<MyOrdersController> {
     final formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(date);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10.r, offset: Offset(0, 4.h)),
         ],
       ),
       child: ClipRRect(
@@ -112,42 +113,42 @@ class MyOrdersView extends GetView<MyOrdersController> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Order #${order['id']}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text("Order #${order['id']}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                         decoration: BoxDecoration(
                           color: statusColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
                           order['status'],
-                          style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: statusColor, fontSize: 11.sp, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(formattedDate, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-                  const Divider(height: 24),
+                  SizedBox(height: 4.h),
+                  Text(formattedDate, style: TextStyle(color: Colors.grey[600], fontSize: 12.sp)),
+                  Divider(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("${(order['items'] as List).length} Items", style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                          const SizedBox(height: 4),
+                          Text("${(order['items'] as List).length} Items", style: TextStyle(color: Colors.grey[600], fontSize: 13.sp)),
+                          SizedBox(height: 4.h),
                           Row(
                             children: [
-                              const Text("Total: ", style: TextStyle(fontSize: 14)),
-                              Text("৳${order['total']}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF00B14F))),
+                              Text("Total: ", style: TextStyle(fontSize: 14.sp)),
+                              Text("৳${order['total']}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, color: const Color(0xFF00B14F))),
                             ],
                           ),
                         ],
@@ -158,10 +159,10 @@ class MyOrdersView extends GetView<MyOrdersController> {
                           backgroundColor: const Color(0xFF00B14F),
                           foregroundColor: Colors.white,
                           elevation: 0,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                         ),
-                        child: const Text("See Details", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        child: Text("See Details", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -179,11 +180,11 @@ class MyOrdersView extends GetView<MyOrdersController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.receipt_long_outlined, size: 80, color: Colors.grey[300]),
-          const SizedBox(height: 16),
-          Text("No orders found", style: TextStyle(color: Colors.grey[600], fontSize: 16)),
-          const SizedBox(height: 8),
-          Text("Place your first order now!", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+          Icon(Icons.receipt_long_outlined, size: 80.r, color: Colors.grey[300]),
+          SizedBox(height: 16.h),
+          Text("No orders found", style: TextStyle(color: Colors.grey[600], fontSize: 16.sp)),
+          SizedBox(height: 8.h),
+          Text("Place your first order now!", style: TextStyle(color: Colors.grey[400], fontSize: 12.sp)),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 import '../../product_detail/views/product_detail_view.dart';
@@ -49,20 +50,20 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: const [
-              Icon(Icons.location_on, color: Color(0xFF00B14F), size: 22),
-              SizedBox(width: 4),
+            children: [
+              Icon(Icons.location_on, color: const Color(0xFF00B14F), size: 22.r),
+              SizedBox(width: 4.w),
               Text("AL-Khalifa Restaurant\n& Convention Hall",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10))
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp))
             ],
           ),
           IconButton(
-              icon: const Icon(Icons.notifications_none_outlined),
+              icon: Icon(Icons.notifications_none_outlined, size: 24.r),
               onPressed: () {}),
         ],
       ),
@@ -71,18 +72,18 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       child: TextField(
         onChanged: (value) => controller.searchQuery.value = value,
         decoration: InputDecoration(
           hintText: "Search for food",
-          hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
-          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
+          prefixIcon: Icon(Icons.search, color: Colors.grey, size: 20.r),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(vertical: 12),
+          contentPadding: EdgeInsets.symmetric(vertical: 12.h),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             borderSide: BorderSide.none,
           ),
         ),
@@ -225,14 +226,14 @@ class HomeView extends GetView<HomeController> {
         controller.sliders.length,
         (index) => Obx(() => AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          height: 6,
-          width: controller.currentSliderIndex.value == index ? 20 : 6,
+          margin: EdgeInsets.symmetric(horizontal: 4.w),
+          height: 6.h,
+          width: controller.currentSliderIndex.value == index ? 20.w : 6.w,
           decoration: BoxDecoration(
             color: controller.currentSliderIndex.value == index
                 ? const Color(0xFF00B14F)
                 : Colors.grey[300],
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: BorderRadius.circular(3.r),
           ),
         )),
       ),
@@ -294,7 +295,7 @@ class HomeView extends GetView<HomeController> {
   Widget _buildSectionHeader(String title,
       {String? subtitle, VoidCallback? onSeeAll}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -302,20 +303,21 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 17)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 17.sp)),
               if (subtitle != null)
                 Text(subtitle,
                     style:
-                        const TextStyle(color: Colors.grey, fontSize: 12)),
+                        TextStyle(color: Colors.grey, fontSize: 12.sp)),
             ],
           ),
           TextButton(
             onPressed: onSeeAll,
-            child: const Text("See All",
+            child: Text("See All",
                 style: TextStyle(
-                    color: Color(0xFF00B14F),
-                    fontWeight: FontWeight.w600)),
+                    color: const Color(0xFF00B14F),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp)),
           ),
         ],
       ),
@@ -341,32 +343,32 @@ class HomeView extends GetView<HomeController> {
                     style: TextStyle(color: Colors.grey, fontSize: 13))));
       }
       return SizedBox(
-        height: 105,
+        height: 105.h,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           itemCount: menus.length,
-          separatorBuilder: (_, __) => const SizedBox(width: 16),
+          separatorBuilder: (_, __) => SizedBox(width: 16.w),
           itemBuilder: (context, index) {
             final menu = menus[index]; // fields: id, title, image_url
             final imageUrl = menu['image_url'] as String? ?? '';
             final title = menu['title'] as String? ?? '';
             return SizedBox(
-              width: 70,
+              width: 70.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                     Container(
-                      width: 52,
-                      height: 52,
+                      width: 52.r,
+                      height: 52.r,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
                               color: Colors.black.withOpacity(0.06),
-                              blurRadius: 8)
+                              blurRadius: 8.r)
                         ],
                       ),
                       child: imageUrl.isNotEmpty
@@ -375,21 +377,21 @@ class HomeView extends GetView<HomeController> {
                                 imageUrl,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.restaurant_menu,
-                                        color: Color(0xFF00B14F), size: 24),
+                                    Icon(Icons.restaurant_menu,
+                                        color: const Color(0xFF00B14F), size: 24.r),
                               ),
                             )
-                          : const Icon(Icons.restaurant_menu,
-                              color: Color(0xFF00B14F), size: 24),
+                          : Icon(Icons.restaurant_menu,
+                              color: const Color(0xFF00B14F), size: 24.r),
                     ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
                     title,
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 11, color: Colors.black87),
+                    style: TextStyle(
+                        fontSize: 11.sp, color: Colors.black87),
                   ),
                 ],
               ),
@@ -419,15 +421,15 @@ class HomeView extends GetView<HomeController> {
                     style: TextStyle(color: Colors.grey, fontSize: 13))));
       }
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 14,
-            mainAxisSpacing: 14,
-            childAspectRatio: 0.8,
+            crossAxisSpacing: 14.w,
+            mainAxisSpacing: 14.h,
+            childAspectRatio: 0.72, // Modified to prevent overflow
           ),
           itemCount: items.length,
           itemBuilder: (context, index) {
@@ -457,10 +459,10 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14.r),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.06), blurRadius: 10)
+                color: Colors.black.withOpacity(0.06), blurRadius: 10.r)
           ],
         ),
         child: Column(
@@ -470,65 +472,65 @@ class HomeView extends GetView<HomeController> {
               children: [
                 ClipRRect(
                   borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(14)),
+                      BorderRadius.vertical(top: Radius.circular(14.r)),
                   child: imageUrl.isNotEmpty
                       ? Image.network(
                           imageUrl,
-                          height: 140,
+                          height: 120.h, // Slightly reduced height to give more room for text
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               Container(
-                            height: 140,
+                            height: 120.h,
                             color: Colors.grey[200],
-                            child: const Icon(Icons.image, color: Colors.grey),
+                            child: Icon(Icons.image, color: Colors.grey, size: 24.r),
                           ),
                         )
                       : Container(
-                          height: 140,
+                          height: 120.h,
                           color: Colors.grey[200],
-                          child: const Icon(Icons.image, color: Colors.grey)),
+                          child: Icon(Icons.image, color: Colors.grey, size: 24.r)),
                 ),
                 Positioned(
-                  bottom: 8,
-                  right: 8,
+                  bottom: 8.h,
+                  right: 8.w,
                   child: Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(4.r),
                     decoration: const BoxDecoration(
                         color: Color(0xFF00B14F),
                         shape: BoxShape.circle),
-                    child: const Icon(Icons.add,
-                        color: Colors.white, size: 18),
+                    child: Icon(Icons.add,
+                        color: Colors.white, size: 18.r),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              padding: EdgeInsets.fromLTRB(10.w, 8.h, 10.w, 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 13),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 13.sp),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Row(
                     children: [
-                      _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0),
-                      const SizedBox(width: 4),
+                      _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0, size: 12.r),
+                      SizedBox(width: 4.w),
                       Text("(${(product['review_count'] ?? 0)})",
-                          style: const TextStyle(
-                              fontSize: 11, color: Colors.grey)),
+                          style: TextStyle(
+                              fontSize: 11.sp, color: Colors.grey)),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
                     "Tk ${price.toStringAsFixed(0)}",
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         color: Colors.black),
                   ),
                 ],
@@ -560,15 +562,15 @@ class HomeView extends GetView<HomeController> {
             ));
       }
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 14,
-            mainAxisSpacing: 14,
-            childAspectRatio: 0.78,
+            crossAxisSpacing: 14.w,
+            mainAxisSpacing: 14.h,
+            childAspectRatio: 0.7, // Taller for mobile consistency
           ),
           itemCount: menus.length,
           itemBuilder: (context, index) {
@@ -593,10 +595,10 @@ class HomeView extends GetView<HomeController> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14.r),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.06), blurRadius: 10)
+                color: Colors.black.withOpacity(0.06), blurRadius: 10.r)
           ],
         ),
       child: Column(
@@ -608,46 +610,46 @@ class HomeView extends GetView<HomeController> {
             child: imageUrl.isNotEmpty
                 ? Image.network(
                     imageUrl,
-                    height: 130,
+                    height: 110.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
-                      height: 130,
+                      height: 110.h,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.image, color: Colors.grey),
+                      child: Icon(Icons.image, color: Colors.grey, size: 24.r),
                     ),
                   )
                 : Container(
-                    height: 130,
+                    height: 110.h,
                     color: Colors.grey[200],
-                    child: const Icon(Icons.image, color: Colors.grey)),
+                    child: Icon(Icons.image, color: Colors.grey, size: 24.r)),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 13),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 13.sp),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Row(
                   children: [
-                    _buildRatingStars((menu['rating'] as num?)?.toDouble() ?? 5.0),
-                    const SizedBox(width: 4),
+                    _buildRatingStars((menu['rating'] as num?)?.toDouble() ?? 5.0, size: 12.r),
+                    SizedBox(width: 4.w),
                     Text("(${(menu['review_count'] ?? 0)})",
                         style:
-                            const TextStyle(fontSize: 11, color: Colors.grey)),
+                            TextStyle(fontSize: 11.sp, color: Colors.grey)),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(
                   "Tk ${price.toStringAsFixed(0)}",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: Colors.black),
                 ),
               ],
