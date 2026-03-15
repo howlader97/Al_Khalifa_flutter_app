@@ -8,6 +8,7 @@ import '../../../data/providers/order_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../../data/providers/payment_provider.dart';
+import '../../../routes/app_pages.dart';
 import '../views/ssl_commerz_webview.dart';
 
 class CheckoutController extends GetxController {
@@ -146,7 +147,7 @@ class CheckoutController extends GetxController {
             onPaymentSuccess: () async {
               // Payment succeeded — cart is cleared on backend. Refresh & go home.
               await cartController.fetchCart();
-              Get.offAllNamed('/home');
+              Get.offAllNamed(Routes.MAIN_DASHBOARD);
               Get.snackbar("Success", "Payment Successful!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
             },
             onPaymentFailed: () {
@@ -168,7 +169,7 @@ class CheckoutController extends GetxController {
       await cartController.fetchCart();
       Get.snackbar("Success", "Order placed successfully!",
           backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
-      Get.offAllNamed('/home');
+      Get.offAllNamed(Routes.MAIN_DASHBOARD);
     } catch (e) {
       Get.snackbar("Order Error", e.toString(),
           backgroundColor: Colors.red, colorText: Colors.white);
