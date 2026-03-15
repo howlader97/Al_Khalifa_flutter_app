@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           debugShowCheckedModeBanner: false,
-          defaultTransition: Transition.rightToLeftWithFade,
+          defaultTransition: Transition.fade,
           transitionDuration: const Duration(milliseconds: 400),
           theme: ThemeData(
             primarySwatch: Colors.green,
