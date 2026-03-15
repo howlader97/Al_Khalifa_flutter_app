@@ -18,14 +18,14 @@ class AllProductsView extends GetView<AllProductsController> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Get.back(),
         ),
-        title: const Text(
-          "Popular Products",
+        title: Obx(() => Text(
+          controller.title.value,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
-        ),
+        )),
         centerTitle: false,
       ),
       body: Obx(() {

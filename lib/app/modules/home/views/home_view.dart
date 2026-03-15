@@ -45,16 +45,19 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                _buildProductGrid(context, products: section['products']),
+                                _buildProductGrid(context, 
+                                    products: section['products'], 
+                                    limit: 4),
                               ],
                             );
                           }).toList(),
                         )),
                     const SizedBox(height: 24),
-                    _buildSectionHeader("Meal For One",
-                        subtitle: "Delivery fee included!", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
+                    _buildSectionHeader("All Products", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS, arguments: {"title": "All Products"})),
                     const SizedBox(height: 12),
-                    _buildPartyMenuList(context),
+                    Obx(() => _buildProductGrid(context, 
+                        products: controller.filteredProducts, 
+                        limit: 6)),
                   ],
                 ),
               ),
@@ -453,7 +456,8 @@ class HomeView extends GetView<HomeController> {
   }
 
   // ---- Dynamic Sections: uses products passed from controller.homeSections ----
-  Widget _buildProductGrid(BuildContext context, {required List<dynamic> products}) {
+  Widget _buildProductGrid(BuildContext context,
+      {required List<dynamic> products, int limit = 4}) {
     if (products.isEmpty) {
       return const SizedBox(
           height: 80,
@@ -461,7 +465,7 @@ class HomeView extends GetView<HomeController> {
               child: Text("No products",
                   style: TextStyle(color: Colors.grey, fontSize: 13))));
     }
-    final items = products.take(4).toList(); // Show first 4 as requested
+    final items = products.take(limit).toList();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: GridView.builder(

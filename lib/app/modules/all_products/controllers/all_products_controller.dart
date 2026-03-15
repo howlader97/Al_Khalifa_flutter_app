@@ -7,14 +7,14 @@ class AllProductsController extends GetxController {
   var isLoading = false.obs;
   var products = <dynamic>[].obs;
   int? sectionId;
-  String title = "All Products";
+  var title = "All Products".obs;
 
   @override
   void onInit() {
     super.onInit();
     if (Get.arguments is Map) {
       sectionId = Get.arguments['section_id'];
-      title = Get.arguments['title'] ?? "All Products";
+      title.value = Get.arguments['title'] ?? "All Products";
     }
     fetchProducts();
   }
