@@ -407,6 +407,7 @@ class HomeView extends GetView<HomeController> {
                 final menu = menus[index];
                 final imageUrl = menu['image_url'] as String? ?? '';
                 final title = menu['title'] as String? ?? '';
+                final double rating=menu["rating"];
                 return GestureDetector(
                   onTap: () => Get.toNamed(
                     Routes.MENU_DETAIL,
@@ -471,16 +472,18 @@ class HomeView extends GetView<HomeController> {
                                 SizedBox(height: 8.h),
                                 Row(
                                   children: [
-                                    Icon(Icons.star, color: Colors.amber, size: 16.r),
+                                    Row(
+                                      children: [
+                                        for(int i=0;i<rating;i++)
+                                          Icon(Icons.star, color: Colors.amber, size: 16.r),
+                                      ],
+                                    ),
                                     SizedBox(width: 4.w),
                                     Text(
-                                      "4.5", // Hardcoded for design, can be dynamic
+                                      rating.toString(), // Hardcoded for design, can be dynamic
                                       style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                                     ),
                                     SizedBox(width: 8.w),
-                                    Text("Free Delivery", 
-                                      style: TextStyle(color: const Color(0xFF00B14F), fontSize: 11.sp, fontWeight: FontWeight.w500),
-                                    ),
                                   ],
                                 )
                               ],

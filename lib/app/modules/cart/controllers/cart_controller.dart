@@ -1,6 +1,8 @@
-import 'package:get/get.dart';
 import '../../../data/models/cart_model.dart';
 import '../../../data/providers/cart_provider.dart';
+import '../../../data/providers/delivery_fee_provider.dart';
+import 'package:get/get.dart';
+
 
 class CartController extends GetxController {
   final CartProvider cartProvider;
@@ -8,11 +10,26 @@ class CartController extends GetxController {
 
   final isLoading = false.obs;
   final cartResponse = Rxn<CartResponse>();
+  final dynamicDeliveryFee = 0.0.obs;
+  final isLoadingFee = false.obs;
+  final _deliveryFeeProvider = DeliveryFeeProvider();
 
   @override
   void onInit() {
     super.onInit();
     fetchCart();
+    fetchDeliveryFee();
+  }
+
+  Future<void> fetchDeliveryFee() async {
+    try {
+      isLoadingFee.value = true;
+      dynamicDeliveryFee.value = await _deliveryFeeProvider.getLatestDeliveryFee();
+    } catch (e) {
+      print("Error fetching delivery fee: $e");
+    } finally {
+      isLoadingFee.value = false;
+    }
   }
 
   Future<void> fetchCart() async {
@@ -65,4 +82,9 @@ class CartController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // Calculated values for UI
+  double get subtotal => cartResponse.value?.subtotal ?? 0.0;
+  double get deliveryFee => dynamicDeliveryFee.value;
+  double get total => subtotal + deliveryFee;
 }

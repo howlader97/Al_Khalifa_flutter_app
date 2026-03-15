@@ -50,7 +50,7 @@ class CartView extends GetView<CartController> {
                 },
               ),
             ),
-            _buildOrderSummary(cart),
+            _buildOrderSummary(),
           ],
         );
       }),
@@ -208,12 +208,12 @@ class CartView extends GetView<CartController> {
     );
   }
 
-  Widget _buildOrderSummary(CartResponse cart) {
+  Widget _buildOrderSummary() {
     return Container(
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+        borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
@@ -226,18 +226,18 @@ class CartView extends GetView<CartController> {
         top: false,
         child: Column(
           children: [
-            _buildSummaryRow("Subtotal", "Tk ${cart.subtotal.toStringAsFixed(0)}"),
+            Obx(() => _buildSummaryRow("Subtotal", "Tk ${controller.subtotal.toStringAsFixed(0)}")),
             SizedBox(height: 8.h),
-            _buildSummaryRow("Delivery Charge", "Tk ${cart.shipping.toStringAsFixed(0)}"),
+            Obx(() => _buildSummaryRow("Delivery Charge", "Tk ${controller.deliveryFee.toStringAsFixed(0)}")),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 12.h),
               child: const Divider(),
             ),
-            _buildSummaryRow(
+            Obx(() => _buildSummaryRow(
               "Total", 
-              "Tk ${cart.total.toStringAsFixed(0)}", 
+              "Tk ${controller.total.toStringAsFixed(0)}", 
               isTotal: true
-            ),
+            )),
             SizedBox(height: 20.h),
             SizedBox(
               width: double.infinity,
