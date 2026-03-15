@@ -17,6 +17,7 @@ class HomeController extends GetxController {
   var categories = <dynamic>[].obs;
   var partyMenus = <dynamic>[].obs;
   var sliders = <dynamic>[].obs;
+  var homeSections = <dynamic>[].obs;
   var currentSliderIndex = 0.obs;
   var selectedCategoryId = RxnString();
   var searchQuery = "".obs;
@@ -70,6 +71,7 @@ class HomeController extends GetxController {
     fetchProducts();
     fetchPartyMenus();
     fetchSliders();
+    fetchHomeSections();
   }
 
   Future<void> fetchSliders() async {
@@ -112,6 +114,14 @@ class HomeController extends GetxController {
       partyMenus.value = data['items'] ?? [];
     } catch (_) {} finally {
       isLoadingMenus.value = false;
+    }
+  }
+
+  Future<void> fetchHomeSections() async {
+    try {
+      homeSections.value = await _provider.getHomeSections();
+    } catch (e) {
+      print("Error fetching home sections: $e");
     }
   }
 

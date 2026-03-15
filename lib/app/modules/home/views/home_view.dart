@@ -29,10 +29,27 @@ class HomeView extends GetView<HomeController> {
                     _buildSectionHeader("Our Cuisines", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
                     const SizedBox(height: 12),
                     _buildCategoryList(),
-                    const SizedBox(height: 24),
-                    _buildSectionHeader("Popular", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS)),
-                    const SizedBox(height: 12),
-                    _buildProductGrid(context),
+                    const SizedBox(height: 16),
+                    // Dynamic Product Sections
+                    Obx(() => Column(
+                          children: controller.homeSections.map((section) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                _buildSectionHeader(
+                                  section['name'],
+                                  onSeeAll: () => Get.toNamed(
+                                    Routes.ALL_PRODUCTS,
+                                    arguments: {"section_id": section['id'], "title": section['name']},
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                _buildProductGrid(context, products: section['products']),
+                              ],
+                            );
+                          }).toList(),
+                        )),
                     const SizedBox(height: 24),
                     _buildSectionHeader("Meal For One",
                         subtitle: "Delivery fee included!", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
@@ -435,42 +452,33 @@ class HomeView extends GetView<HomeController> {
     });
   }
 
-  // ---- Popular: uses /products/ API ----
-  Widget _buildProductGrid(BuildContext context) {
-    return Obx(() {
-      if (controller.isLoadingProducts.value) {
-        return const SizedBox(
-            height: 100,
-            child: Center(
-                child:
-                    CircularProgressIndicator(color: Color(0xFF00B14F))));
-      }
-      final items = controller.filteredProducts.take(6).toList();
-      if (items.isEmpty) {
-        return const SizedBox(
-            height: 80,
-            child: Center(
-                child: Text("No products",
-                    style: TextStyle(color: Colors.grey, fontSize: 13))));
-      }
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 14.w,
-            mainAxisSpacing: 14.h,
-            childAspectRatio: 0.72, // Modified to prevent overflow
-          ),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return _buildProductCard(context, items[index]);
-          },
+  // ---- Dynamic Sections: uses products passed from controller.homeSections ----
+  Widget _buildProductGrid(BuildContext context, {required List<dynamic> products}) {
+    if (products.isEmpty) {
+      return const SizedBox(
+          height: 80,
+          child: Center(
+              child: Text("No products",
+                  style: TextStyle(color: Colors.grey, fontSize: 13))));
+    }
+    final items = products.take(4).toList(); // Show first 4 as requested
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 14.w,
+          mainAxisSpacing: 14.h,
+          childAspectRatio: 0.72,
         ),
-      );
-    });
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return _buildProductCard(context, items[index]);
+        },
+      ),
+    );
   }
 
   Widget _buildProductCard(

@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 class ProductProvider {
   static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud';
 
-  Future<Map<String, dynamic>> getProducts({int page = 1, int size = 20, String? categoryId}) async {
+  Future<Map<String, dynamic>> getProducts({int page = 1, int size = 20, String? categoryId, int? section_id}) async {
     String url = '$baseUrl/products/?page=$page&size=$size';
+    if (section_id != null) url += '&section_id=$section_id';
     //if (categoryId != null) url += '&category_id=$categoryId';
     final response = await http.get(Uri.parse(url));
     print("get products body: ${response.body}, statuscode: ${response.statusCode}");
@@ -48,5 +49,13 @@ class ProductProvider {
       return jsonDecode(response.body);
     }
     throw Exception('Failed to load party menu');
+  }
+
+  Future<List<dynamic>> getHomeSections() async {
+    final response = await http.get(Uri.parse('$baseUrl/product-sections/home'));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    }
+    throw Exception('Failed to load home sections');
   }
 }

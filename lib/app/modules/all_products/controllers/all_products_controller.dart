@@ -6,17 +6,23 @@ class AllProductsController extends GetxController {
 
   var isLoading = false.obs;
   var products = <dynamic>[].obs;
+  int? sectionId;
+  String title = "All Products";
 
   @override
   void onInit() {
     super.onInit();
+    if (Get.arguments is Map) {
+      sectionId = Get.arguments['section_id'];
+      title = Get.arguments['title'] ?? "All Products";
+    }
     fetchProducts();
   }
 
   Future<void> fetchProducts() async {
     try {
       isLoading.value = true;
-      final data = await _provider.getProducts();
+      final data = await _provider.getProducts(section_id: sectionId);
       products.value = data['items'] ?? [];
     } catch (_) {
     } finally {
