@@ -126,6 +126,7 @@ class ProfileView extends GetView<ProfileController> {
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
+          _buildMenuItem(Icons.notifications_active_outlined, "Notifications", () => Get.toNamed(Routes.NOTIFICATION)),
           _buildMenuItem(Icons.person_add_alt_1_outlined, "Invite Friend", () {}),
           _buildMenuItem(Icons.history, "Order History", () {
             Get.toNamed(Routes.MY_ORDERS);

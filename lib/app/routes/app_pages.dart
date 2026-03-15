@@ -33,6 +33,8 @@ import '../modules/order_details/bindings/order_details_binding.dart';
 import '../modules/order_details/views/order_details_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
+import '../modules/notification/bindings/notification_binding.dart';
+import '../modules/notification/views/notification_view.dart';
 import '../modules/product_detail/bindings/product_detail_binding.dart';
 import '../modules/product_detail/views/product_detail_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -156,6 +158,11 @@ class AppPages {
       name: _Paths.CMS_PAGE,
       page: () => const CmsPageView(),
       binding: CmsPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION,
+      page: () => const NotificationView(),
+      binding: NotificationBinding(),
     ),
   ];
 }

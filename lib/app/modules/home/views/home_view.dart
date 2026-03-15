@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../routes/app_pages.dart';
+import '../../notification/controllers/notification_controller.dart';
 import '../controllers/home_controller.dart';
-import '../../product_detail/views/product_detail_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -49,6 +49,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildHeader() {
+    final notificationController = Get.find<NotificationController>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       child: Row(
@@ -62,9 +63,41 @@ class HomeView extends GetView<HomeController> {
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp))
             ],
           ),
-          IconButton(
-              icon: Icon(Icons.notifications_none_outlined, size: 24.r),
-              onPressed: () {}),
+          Stack(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.notifications_none_outlined, size: 24.r),
+                  onPressed: () {
+                    Get.toNamed(Routes.NOTIFICATION);
+                  }),
+              Positioned(
+                right: 8.w,
+                top: 8.h,
+                child: Obx(() => notificationController.unreadCount.value > 0
+                    ? Container(
+                        padding: EdgeInsets.all(2.r),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 14.r,
+                          minHeight: 14.r,
+                        ),
+                        child: Text(
+                          '${notificationController.unreadCount.value > 9 ? '9+' : notificationController.unreadCount.value}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : const SizedBox.shrink()),
+              ),
+            ],
+          ),
         ],
       ),
     );

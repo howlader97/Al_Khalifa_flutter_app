@@ -23,6 +23,7 @@ abstract class Routes {
   static const DELETE_ACCOUNT = _Paths.DELETE_ACCOUNT;
   static const MAIN_DASHBOARD = _Paths.MAIN_DASHBOARD;
   static const CMS_PAGE = _Paths.CMS_PAGE;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
 }
 
 abstract class _Paths {
@@ -48,4 +49,5 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const DELETE_ACCOUNT = '/delete-account';
   static const CMS_PAGE = '/cms-page';
+  static const NOTIFICATION = '/notification';
 }
