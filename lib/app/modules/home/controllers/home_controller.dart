@@ -27,9 +27,23 @@ class HomeController extends GetxController {
     if (searchQuery.value.isEmpty) {
       return products;
     }
+    final query = searchQuery.value.toLowerCase();
     return products.where((product) {
       final name = (product['name'] as String? ?? '').toLowerCase();
-      return name.contains(searchQuery.value.toLowerCase());
+      final description = (product['description'] as String? ?? '').toLowerCase();
+      return name.contains(query) || description.contains(query);
+    }).toList();
+  }
+
+  List<dynamic> get filteredPartyMenus {
+    if (searchQuery.value.isEmpty) {
+      return partyMenus;
+    }
+    final query = searchQuery.value.toLowerCase();
+    return partyMenus.where((menu) {
+      final title = (menu['title'] as String? ?? '').toLowerCase();
+      final description = (menu['description'] as String? ?? '').toLowerCase();
+      return title.contains(query) || description.contains(query);
     }).toList();
   }
 

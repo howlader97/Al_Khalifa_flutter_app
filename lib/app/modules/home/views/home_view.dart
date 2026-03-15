@@ -18,49 +18,54 @@ class HomeView extends GetView<HomeController> {
             _buildHeader(),
             _buildSearchBar(),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 16),
-                    _buildPromoBanner(),
-                    const SizedBox(height: 24),
-                    _buildSectionHeader("Our Cuisines", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
-                    const SizedBox(height: 12),
-                    _buildCategoryList(),
-                    const SizedBox(height: 16),
-                    // Dynamic Product Sections
-                    Obx(() => Column(
-                          children: controller.homeSections.map((section) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 24),
-                                _buildSectionHeader(
-                                  section['name'],
-                                  onSeeAll: () => Get.toNamed(
-                                    Routes.ALL_PRODUCTS,
-                                    arguments: {"section_id": section['id'], "title": section['name']},
-                                  ),
+              child: Obx(() {
+                if (controller.searchQuery.value.isNotEmpty) {
+                  return _buildSearchResults(context);
+                }
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      _buildPromoBanner(),
+                      const SizedBox(height: 24),
+                      _buildSectionHeader("Our Cuisines", onSeeAll: () => Get.toNamed(Routes.ALL_MENUS)),
+                      const SizedBox(height: 12),
+                      _buildCategoryList(),
+                      const SizedBox(height: 16),
+                      // Dynamic Product Sections
+                      Column(
+                        children: controller.homeSections.map((section) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 24),
+                              _buildSectionHeader(
+                                section['name'],
+                                onSeeAll: () => Get.toNamed(
+                                  Routes.ALL_PRODUCTS,
+                                  arguments: {"section_id": section['id'], "title": section['name']},
                                 ),
-                                const SizedBox(height: 12),
-                                _buildProductGrid(context, 
-                                    products: section['products'], 
-                                    limit: 4),
-                              ],
-                            );
-                          }).toList(),
-                        )),
-                    const SizedBox(height: 24),
-                    _buildSectionHeader("All Products", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS, arguments: {"title": "All Products"})),
-                    const SizedBox(height: 12),
-                    Obx(() => _buildProductGrid(context, 
-                        products: controller.filteredProducts, 
-                        limit: 6)),
-                  ],
-                ),
-              ),
+                              ),
+                              const SizedBox(height: 12),
+                              _buildProductGrid(context, 
+                                  products: section['products'], 
+                                  limit: 4),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSectionHeader("All Products", onSeeAll: () => Get.toNamed(Routes.ALL_PRODUCTS, arguments: {"title": "All Products"})),
+                      const SizedBox(height: 12),
+                      _buildProductGrid(context, 
+                          products: controller.filteredProducts, 
+                          limit: 6),
+                    ],
+                  ),
+                );
+              }),
             ),
           ],
         ),
@@ -795,6 +800,150 @@ class HomeView extends GetView<HomeController> {
           return Icon(Icons.star_outline, color: Colors.grey[400], size: size);
         }
       }),
+    );
+  }
+
+  Widget _buildSearchResults(BuildContext context) {
+    final searchMenus = controller.filteredPartyMenus;
+    final searchProducts = controller.filteredProducts;
+
+    if (searchMenus.isEmpty && searchProducts.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search_off, size: 60.r, color: Colors.grey[400]),
+            SizedBox(height: 16.h),
+            Text(
+              "No results found for \"${controller.searchQuery.value}\"",
+              style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (searchMenus.isNotEmpty) ...[
+            const SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Text("Matched Cuisines",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+            ),
+            const SizedBox(height: 12),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: searchMenus.length,
+              itemBuilder: (context, index) {
+                final menu = searchMenus[index];
+                return _buildSearchMenuTile(menu);
+              },
+            ),
+          ],
+          if (searchProducts.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Text("Matched Products",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+            ),
+            const SizedBox(height: 12),
+            _buildProductGrid(context, products: searchProducts, limit: 100),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchMenuTile(dynamic menu) {
+    final String imageUrl = menu['image_url'] as String? ?? '';
+    final String title = menu['title'] as String? ?? '';
+    final double price = (menu['price'] as num?)?.toDouble() ?? 0;
+    final double rating = (menu['rating'] as num?)?.toDouble() ?? 5.0;
+
+    return GestureDetector(
+      onTap: () => Get.toNamed(
+        Routes.MENU_DETAIL,
+        arguments: {'id': menu['id']},
+      ),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        padding: EdgeInsets.all(12.r),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 10.r,
+                offset: const Offset(0, 4))
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: imageUrl.isNotEmpty
+                  ? Image.network(
+                      imageUrl,
+                      width: 70.w,
+                      height: 70.w,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        width: 70.w,
+                        height: 70.w,
+                        color: Colors.grey[100],
+                        child: Icon(Icons.restaurant_menu,
+                            color: const Color(0xFF00B14F), size: 24.r),
+                      ),
+                    )
+                  : Container(
+                      width: 70.w,
+                      height: 70.w,
+                      color: Colors.grey[100],
+                      child: Icon(Icons.restaurant_menu,
+                          color: const Color(0xFF00B14F), size: 24.r),
+                    ),
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 14.sp),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.amber, size: 14.r),
+                      SizedBox(width: 4.w),
+                      Text(rating.toString(),
+                          style: TextStyle(
+                              fontSize: 12.sp, fontWeight: FontWeight.w500)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Text("Tk ${price.toStringAsFixed(0)}",
+                      style: TextStyle(
+                          color: const Color(0xFF00B14F),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp)),
+                ],
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios, size: 14.r, color: Colors.grey[400]),
+          ],
+        ),
+      ),
     );
   }
 }
