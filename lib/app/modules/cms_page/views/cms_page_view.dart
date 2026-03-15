@@ -11,6 +11,7 @@ class CmsPageView extends GetView<CmsPageController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         title: Obx(() => Text(controller.title.value, style: const TextStyle(color: Colors.black))),
         backgroundColor: Colors.white,
         elevation: 0,

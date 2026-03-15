@@ -13,10 +13,13 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
+
+        leading: Navigator.of(context).canPop()
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Get.back(),
+              )
+            : null,
         title: const Text(
           'Profile',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -28,6 +31,8 @@ class ProfileView extends GetView<ProfileController> {
             onPressed: () => controller.goToEditProfile(),
           ),
         ],
+        surfaceTintColor: Colors.white,
+        automaticallyImplyActions: false,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

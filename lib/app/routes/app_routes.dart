@@ -21,11 +21,13 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const DELETE_ACCOUNT = _Paths.DELETE_ACCOUNT;
+  static const MAIN_DASHBOARD = _Paths.MAIN_DASHBOARD;
   static const CMS_PAGE = _Paths.CMS_PAGE;
 }
 
 abstract class _Paths {
   _Paths._();
+  static const MAIN_DASHBOARD = '/main-dashboard';
   static const HOME = '/home';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/onboarding';

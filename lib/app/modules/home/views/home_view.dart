@@ -44,7 +44,6 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(),
     );
   }
 
@@ -660,50 +659,6 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 12,
-              offset: const Offset(0, -2))
-        ],
-      ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF00B14F),
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined), label: "Cart"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long_outlined), label: "Orders"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
-        onTap: (index) {
-          if (index == 1) {
-            Get.toNamed(Routes.CART);
-          } else if (index == 2) {
-            Get.toNamed(Routes.MY_ORDERS);
-          } else if (index == 3) {
-            Get.toNamed(Routes.PROFILE);
-          }
-        },
-      ),
-    );
-  }
 
   Widget _buildRatingStars(double rating, {double size = 12}) {
     int fullStars = rating.floor();

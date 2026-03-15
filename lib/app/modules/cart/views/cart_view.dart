@@ -14,15 +14,19 @@ class CartView extends GetView<CartController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        surfaceTintColor: Colors.white,
+        automaticallyImplyActions: false,
         title: const Text(
           "My Cart",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
+        leading: Navigator.of(context).canPop() 
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Get.back(),
+              ) 
+            : null,
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.cartResponse.value == null) {

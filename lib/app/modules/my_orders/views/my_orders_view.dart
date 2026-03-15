@@ -14,11 +14,14 @@ class MyOrdersView extends GetView<MyOrdersController> {
         title: const Text('My Orders', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
+        surfaceTintColor: Colors.white,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-          onPressed: () => Get.back(),
-        ),
+        leading: Navigator.of(context).canPop()
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+                onPressed: () => Get.back(),
+              )
+            : null,
       ),
       body: Column(
         children: [

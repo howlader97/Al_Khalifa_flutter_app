@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../modules/main_dashboard/bindings/main_dashboard_binding.dart';
+import '../modules/main_dashboard/views/main_dashboard_view.dart';
+
 import '../modules/all_menus/bindings/all_menus_binding.dart';
 import '../modules/all_menus/views/all_menus_view.dart';
 import '../modules/all_products/bindings/all_products_binding.dart';
@@ -49,6 +52,11 @@ class AppPages {
   static const INITIAL = Routes.SPLASH;
 
   static final routes = [
+    GetPage(
+      name: _Paths.MAIN_DASHBOARD,
+      page: () => const MainDashboardView(),
+      binding: MainDashboardBinding(),
+    ),
     GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
