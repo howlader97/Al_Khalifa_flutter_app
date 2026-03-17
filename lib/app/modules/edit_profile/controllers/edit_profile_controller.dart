@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/auth_provider.dart';
-import '../../../data/models/auth_models.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class EditProfileController extends GetxController {

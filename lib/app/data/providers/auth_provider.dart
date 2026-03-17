@@ -105,7 +105,6 @@ class AuthProvider {
       },
     );
 
-    print("getMe response: ${response.body} and status code: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       return UserRead.fromJson(jsonDecode(response.body));

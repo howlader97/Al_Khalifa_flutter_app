@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
-import '../providers/auth_provider.dart';
+
 
 class OrderProvider {
   static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/orders';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/checkout_controller.dart';
-import '../../../data/models/cart_model.dart';
 
 class CheckoutView extends GetView<CheckoutController> {
   const CheckoutView({super.key});

@@ -43,22 +43,7 @@ class MenuDetailView extends GetView<MenuDetailController> {
                               Text(
                                 "(${(menu['rating'] as num?)?.toStringAsFixed(1) ?? '5.0'}) ${menu['review_count'] ?? 0} Reviews", 
                                 style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.bold)),
-                              const Spacer(),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFE8F7ED),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Text(
-                                  "FREE DELIVERY",
-                                  style: TextStyle(
-                                    color: Color(0xFF00B14F),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
+
                             ],
                           ),
                           const SizedBox(height: 20),

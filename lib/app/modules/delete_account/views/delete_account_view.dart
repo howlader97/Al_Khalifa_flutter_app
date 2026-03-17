@@ -29,7 +29,7 @@ class DeleteAccountView extends GetView<DeleteAccountController> {
           children: [
             const SizedBox(height: 30),
             const Text(
-              "Are you sure you want to permanently Delete your account?",
+              "Are you sure you want to delete your account?",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
             const SizedBox(height: 12),
@@ -101,7 +101,7 @@ class DeleteAccountView extends GetView<DeleteAccountController> {
     Get.dialog(
       AlertDialog(
         title: const Text("Delete Account?"),
-        content: const Text("This action cannot be undone. All your data will be permanently removed."),
+        content: const Text("This action will deactivate your account and you will no longer be able to login."),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
