@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../constants/constants.dart';
+
 class PaymentProvider {
-  final String baseUrl = 'https://akfoodapi.maktechlaravel.cloud';
+  final String baseUrl = apiBaseUrl;
 
   Future<String?> initiatePayment(int orderId, String token) async {
     final response = await http.post(

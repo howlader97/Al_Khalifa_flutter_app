@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../constants/constants.dart';
 import '../models/notification_model.dart';
 
 class NotificationProvider {
-  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/notifications';
+  static  String baseUrl = '$apiBaseUrl/notifications';
 
   Future<NotificationListResponse> getNotifications(String token) async {
     final response = await http.get(

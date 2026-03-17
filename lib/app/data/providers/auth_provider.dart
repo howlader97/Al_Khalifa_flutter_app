@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:akflutterfoodapp/app/data/constants/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import '../models/auth_models.dart';
@@ -7,7 +8,7 @@ import 'package:path/path.dart' as path;
 
 
 class AuthProvider {
-   static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/auth';
+   static final String baseUrl = '$apiBaseUrl/auth';
   // For local development on Android Emulator use:
   // static const String baseUrl = 'http://10.0.2.2:8004/auth';
   // For Real Device or Web use your local IP, e.g., 'http://192.168.0.100:8004/auth'

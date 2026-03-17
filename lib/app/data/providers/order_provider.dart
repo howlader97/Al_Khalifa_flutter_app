@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../constants/constants.dart';
+
 
 class OrderProvider {
-  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/orders';
+  static  String baseUrl = '$apiBaseUrl/orders';
 
   Future<Map<String, dynamic>> placeOrder(Map<String, dynamic> orderData, String token) async {
     final response = await http.post(

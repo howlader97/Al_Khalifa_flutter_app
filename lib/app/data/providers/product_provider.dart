@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../constants/constants.dart';
+
 class ProductProvider {
-  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud';
+  static  String baseUrl = apiBaseUrl;
 
   Future<Map<String, dynamic>> getProducts({int page = 1, int size = 20, String? categoryId, int? sectionId}) async {
     String url = '$baseUrl/products/?page=$page&size=$size';

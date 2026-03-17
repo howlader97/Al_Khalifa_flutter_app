@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../constants/constants.dart';
+
 class DeliveryFeeProvider {
-  static const String baseUrl = 'https://akfoodapi.maktechlaravel.cloud/delivery-fee/';
+  static  String baseUrl = '$apiBaseUrl/delivery-fee/';
 
   Future<double> getLatestDeliveryFee() async {
     final response = await http.get(Uri.parse(baseUrl));
