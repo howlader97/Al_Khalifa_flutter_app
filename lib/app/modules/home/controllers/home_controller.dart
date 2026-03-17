@@ -114,11 +114,10 @@ class HomeController extends GetxController {
     try {
       isLoadingSliders.value = true;
       final fetchedSliders = await _sliderProvider.getActiveSliders();
-      print("Fetched Sliders: ${fetchedSliders.length}");
       sliders.value = fetchedSliders;
       currentSliderIndex.value = 0;
     } catch (e) {
-      print("Error fetching sliders: $e");
+      throw Exception(e.toString());
     } finally {
       isLoadingSliders.value = false;
     }
@@ -157,7 +156,7 @@ class HomeController extends GetxController {
     try {
       homeSections.value = await _provider.getHomeSections();
     } catch (e) {
-      print("Error fetching home sections: $e");
+      throw Exception(e.toString());
     }
   }
 

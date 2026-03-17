@@ -22,7 +22,7 @@ class AllProductsController extends GetxController {
   Future<void> fetchProducts() async {
     try {
       isLoading.value = true;
-      final data = await _provider.getProducts(section_id: sectionId);
+      final data = await _provider.getProducts(sectionId: sectionId);
       products.value = data['items'] ?? [];
     } catch (_) {
     } finally {

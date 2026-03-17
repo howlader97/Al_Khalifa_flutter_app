@@ -63,7 +63,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         itemCount: statuses.length,
-        separatorBuilder: (_, __) => SizedBox(width: 8.w),
+        separatorBuilder: (_, _) => SizedBox(width: 8.w),
         itemBuilder: (context, index) {
           final status = statuses[index];
           return Obx(() {
@@ -105,7 +105,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10.r, offset: Offset(0, 4.h)),
+          BoxShadow(color: Colors.black.withValues(alpha:0.05), blurRadius: 10.r, offset: Offset(0, 4.h)),
         ],
       ),
       child: ClipRRect(
@@ -124,7 +124,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
+                          color: statusColor.withValues(alpha:0.1),
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(

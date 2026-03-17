@@ -6,7 +6,7 @@ class DeliveryFeeProvider {
 
   Future<double> getLatestDeliveryFee() async {
     final response = await http.get(Uri.parse(baseUrl));
-    print("delevery fee response ${response.body}, ${response.statusCode}");
+
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       if (data.isNotEmpty) {

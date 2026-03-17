@@ -30,7 +30,7 @@ class SplashController extends GetxController {
       // If successful, go to dashboard
       Get.offAllNamed(Routes.MAIN_DASHBOARD);
     } catch (e) {
-      print("Token validation failed: $e");
+
       // If token is invalid/expired, go to login
       Get.offAllNamed(Routes.LOGIN);
     }

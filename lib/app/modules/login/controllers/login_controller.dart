@@ -35,7 +35,7 @@ class LoginController extends GetxController {
       );
       final response = await authProvider.login(request);
 
-      print("login response: $response");
+
       
       // Save token
       await storage.write('access_token', response.accessToken);

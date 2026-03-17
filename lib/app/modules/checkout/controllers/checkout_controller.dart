@@ -49,7 +49,8 @@ class CheckoutController extends GetxController {
     try {
       dynamicDeliveryFee.value = await _deliveryFeeProvider.getLatestDeliveryFee();
     } catch (e) {
-      print("Error fetching delivery fee: $e");
+      throw Exception(e.toString());
+
     } finally {
       isLoadingFee.value = false;
     }
@@ -67,7 +68,7 @@ class CheckoutController extends GetxController {
         setCity(initialCity);
       }
     } catch (e) {
-      print("Error fetching delivery areas: $e");
+      throw Exception(e.toString());
     } finally {
       isLoadingAreas.value = false;
     }

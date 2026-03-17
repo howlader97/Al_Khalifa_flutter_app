@@ -26,7 +26,7 @@ class CartController extends GetxController {
       isLoadingFee.value = true;
       dynamicDeliveryFee.value = await _deliveryFeeProvider.getLatestDeliveryFee();
     } catch (e) {
-      print("Error fetching delivery fee: $e");
+      throw Exception(e.toString());
     } finally {
       isLoadingFee.value = false;
     }

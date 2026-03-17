@@ -53,7 +53,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                           decoration: BoxDecoration(
-                            color: statusColor.withOpacity(0.1),
+                            color: statusColor.withValues(alpha:0.1),
                             borderRadius: BorderRadius.circular(20.r),
                           ),
                           child: Text(
@@ -123,7 +123,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           Text("৳${item['price'] * item['quantity']}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp)),
                         ],
                       ),
-                    )).toList(),
+                    )),
                   ],
                 ),
               ),
@@ -205,7 +205,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 20.r, offset: Offset(0, 8.h)),
+          BoxShadow(color: Colors.black.withValues(alpha:0.04), blurRadius: 20.r, offset: Offset(0, 8.h)),
         ],
       ),
       child: Column(

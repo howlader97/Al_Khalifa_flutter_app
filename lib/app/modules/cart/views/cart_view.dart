@@ -109,7 +109,7 @@ class CartView extends GetView<CartController> {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha:0.04),
             blurRadius: 10.r,
             offset: Offset(0, 4.h),
           ),
@@ -221,7 +221,7 @@ class CartView extends GetView<CartController> {
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha:0.06),
             blurRadius: 20.r,
             offset: Offset(0, -4.h),
           ),

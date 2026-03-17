@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -191,7 +191,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8.r)],
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.1), blurRadius: 8.r)],
               ),
               child: Icon(Icons.arrow_back, size: 20.r, color: Colors.black),
             ),
@@ -217,7 +217,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 12.r, offset: Offset(0, -2.h))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.08), blurRadius: 12.r, offset: Offset(0, -2.h))],
       ),
       child: Row(
         children: [

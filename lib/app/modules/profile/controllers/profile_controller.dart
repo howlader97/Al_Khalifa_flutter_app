@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
       isLoading.value = true;
       final token = _storage.read('access_token');
       if (token != null) {
-        print("token: $token");
+
         user.value = await _authProvider.getMe(token);
       }
     } catch (e) {
@@ -58,7 +58,7 @@ class ProfileController extends GetxController {
             "Success",
             "Profile image updated successfully",
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green.withOpacity(0.8),
+            backgroundColor: Colors.green.withValues(alpha:0.8),
             colorText: Colors.white,
           );
         } else {
@@ -66,12 +66,12 @@ class ProfileController extends GetxController {
         }
       }
     } catch (e) {
-      print("Upload Error: $e");
+
       Get.snackbar(
         "Error",
         e.toString().contains("Exception:") ? e.toString().split("Exception: ").last : e.toString(),
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.withOpacity(0.8),
+        backgroundColor: Colors.red.withValues(alpha:0.8),
         colorText: Colors.white,
       );
     } finally {

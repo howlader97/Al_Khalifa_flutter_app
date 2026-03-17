@@ -27,9 +27,9 @@ class CartProvider {
       Uri.parse(baseUrl),
       headers: _headers,
       body: jsonEncode({
-        if (productId != null) 'product_id': productId,
-        if (variationId != null) 'variation_id': variationId,
-        if (partyMenuId != null) 'party_menu_id': partyMenuId,
+        'product_id': ? productId,
+        'variation_id': ?variationId,
+        'party_menu_id': ?partyMenuId,
         'quantity': quantity,
       }),
     );

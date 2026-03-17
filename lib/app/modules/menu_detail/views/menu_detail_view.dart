@@ -107,9 +107,9 @@ class MenuDetailView extends GetView<MenuDetailController> {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha:0.9),
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10)],
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.1), blurRadius: 10)],
               ),
               child: const Icon(Icons.arrow_back, size: 24, color: Colors.black),
             ),
@@ -126,7 +126,7 @@ class MenuDetailView extends GetView<MenuDetailController> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha:0.06),
             blurRadius: 20,
             offset: const Offset(0, -5),
           )
