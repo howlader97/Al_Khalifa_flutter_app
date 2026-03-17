@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../constants/constants.dart';
 
 class ProductProvider {
@@ -9,7 +8,6 @@ class ProductProvider {
   Future<Map<String, dynamic>> getProducts({int page = 1, int size = 20, String? categoryId, int? sectionId}) async {
     String url = '$baseUrl/products/?page=$page&size=$size';
     if (sectionId != null) url += '&section_id=$sectionId';
-    //if (categoryId != null) url += '&category_id=$categoryId';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

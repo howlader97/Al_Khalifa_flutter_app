@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../constants/constants.dart';
 
 
@@ -41,7 +40,7 @@ class OrderProvider {
 
   Future<void> submitReview(Map<String, dynamic> reviewData, String token) async {
     final response = await http.post(
-      Uri.parse('https://akfoodapi.maktechlaravel.cloud/reviews/'),
+      Uri.parse('$baseUrl/reviews/'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
