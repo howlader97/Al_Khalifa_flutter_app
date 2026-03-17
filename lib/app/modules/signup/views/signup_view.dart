@@ -99,11 +99,10 @@ class SignUpView extends GetView<SignUpController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   _socialIcon(Icons.star_outline), 
-                   const SizedBox(width: 20),
-                   _socialIcon(Icons.star_outline),
-                   const SizedBox(width: 20),
-                   _socialIcon(Icons.star_outline),
+                  GestureDetector(
+                    onTap: controller.signInWithGoogle,
+                    child: _socialIcon('assets/img/google.png'),
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
@@ -173,14 +172,16 @@ class SignUpView extends GetView<SignUpController> {
     );
   }
 
-  Widget _socialIcon(IconData icon) {
+
+
+  Widget _socialIcon(String path) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Icon(icon), 
+      child: Image.asset(path,height: 20,width: 20,), // Placeholder since I don't have the icons yet
     );
   }
 }
