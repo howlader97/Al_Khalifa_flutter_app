@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import '../../../data/providers/product_provider.dart';
 import '../../../data/providers/slider_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeController extends GetxController {
   final ProductProvider _provider = ProductProvider();
@@ -116,6 +117,15 @@ class HomeController extends GetxController {
       final fetchedSliders = await _sliderProvider.getActiveSliders();
       sliders.value = fetchedSliders;
       currentSliderIndex.value = 0;
+      
+      // Precache images for faster loading
+      if (Get.context != null) {
+        for (var slider in fetchedSliders) {
+          if (slider['image_url'] != null && slider['image_url'].toString().isNotEmpty) {
+            precacheImage(CachedNetworkImageProvider(slider['image_url']), Get.context!);
+          }
+        }
+      }
     } catch (e) {
       throw Exception(e.toString());
     } finally {

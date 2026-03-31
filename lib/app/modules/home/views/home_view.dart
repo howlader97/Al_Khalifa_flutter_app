@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../routes/app_pages.dart';
 import '../../notification/controllers/notification_controller.dart';
 import '../controllers/home_controller.dart';
@@ -222,10 +223,16 @@ class HomeView extends GetView<HomeController> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(
-              slider['image_url'],
+            CachedNetworkImage(
+              imageUrl: slider['image_url'],
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
+              placeholder: (context, url) => Container(
+                color: Colors.grey[200],
+                child: const Center(
+                  child: CircularProgressIndicator(color: Color(0xFF00B14F)),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
                 color: const Color(0xFF00B14F),
                 child: const Icon(Icons.image_not_supported, color: Colors.white, size: 50),
               ),
@@ -445,12 +452,22 @@ class HomeView extends GetView<HomeController> {
                           borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(16.r)),
                           child: imageUrl.isNotEmpty
-                              ? Image.network(
-                                  imageUrl,
+                              ? CachedNetworkImage(
+                                  imageUrl: imageUrl,
                                   width: 120.w,
                                   height: double.infinity,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
+                                  placeholder: (context, url) => Container(
+                                    width: 120.w,
+                                    color: Colors.grey[100],
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFF00B14F),
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
                                       Container(
                                     width: 120.w,
                                     color: Colors.grey[100],
@@ -782,12 +799,23 @@ class HomeView extends GetView<HomeController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: imageUrl.isNotEmpty
-                  ? Image.network(
-                      imageUrl,
+                  ? CachedNetworkImage(
+                      imageUrl: imageUrl,
                       width: 70.w,
                       height: 70.w,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
+                      placeholder: (context, url) => Container(
+                        width: 70.w,
+                        height: 70.w,
+                        color: Colors.grey[100],
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF00B14F),
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
                         width: 70.w,
                         height: 70.w,
                         color: Colors.grey[100],
