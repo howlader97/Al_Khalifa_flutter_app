@@ -161,7 +161,7 @@ class AllMenusView extends GetView<AllMenusController> {
                   children: [
                     _buildTag(Icons.timer_outlined, "20-30 min"),
                     const SizedBox(width: 12),
-                    _buildTag(Icons.delivery_dining_outlined, "Free Delivery"),
+                    //_buildTag(Icons.delivery_dining_outlined, "Free Delivery"),
                   ],
                 ),
               ],

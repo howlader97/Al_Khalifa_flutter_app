@@ -40,7 +40,7 @@ class OrderProvider {
 
   Future<void> submitReview(Map<String, dynamic> reviewData, String token) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/reviews/'),
+      Uri.parse('$apiBaseUrl/reviews/'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

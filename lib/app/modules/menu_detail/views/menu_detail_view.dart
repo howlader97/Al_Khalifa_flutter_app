@@ -66,6 +66,93 @@ class MenuDetailView extends GetView<MenuDetailController> {
                             style: TextStyle(color: Colors.grey[700], fontSize: 15, height: 1.6),
                           ),
                           const SizedBox(height: 24),
+
+                          // Included Items Section
+                          if (menu['items'] != null && (menu['items'] as List).isNotEmpty) ...[
+                            const Text(
+                              "Included Items",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+
+                            ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: (menu['items'] as List).length,
+                              separatorBuilder: (context, index) => const SizedBox(height: 12),
+                              itemBuilder: (context, index) {
+                                final item = (menu['items'] as List)[index];
+                                final product = item['product'];
+                                if (product == null) return const SizedBox();
+
+                                return Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.grey[200]!),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(alpha:0.02),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[100],
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: product['image_url'] != null && product['image_url'].toString().isNotEmpty
+                                            ? ClipRRect(
+                                                borderRadius: BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  product['image_url'],
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error, stackTrace) =>
+                                                      const Icon(Icons.fastfood, color: Colors.grey),
+                                                ),
+                                              )
+                                            : const Icon(Icons.fastfood, color: Colors.grey),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              product['name'] ?? '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                            if (product['description'] != null && product['description'].toString().isNotEmpty) ...[
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                product['description'],
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: Colors.grey[600],
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 24),
+                          ],
                         ],
                       ),
                     ),
