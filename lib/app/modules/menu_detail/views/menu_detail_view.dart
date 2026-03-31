@@ -73,10 +73,11 @@ class MenuDetailView extends GetView<MenuDetailController> {
                               "Included Items",
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-
+                            const SizedBox(height: 12), // Added back the space below title
                             ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
                               itemCount: (menu['items'] as List).length,
                               separatorBuilder: (context, index) => const SizedBox(height: 12),
                               itemBuilder: (context, index) {
