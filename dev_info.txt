@@ -1,0 +1,26 @@
+java : 17.0.12 2024-07-16 LTS
+===============================================
+Mac/Linux: keytool -genkey -v -keystore key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key
+key make command (windows): keytool -genkeypair -v -keystore key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key
+===============================================
+
+===============================================
+Command to get SHA1 key: keytool -list -v -keystore key.jks
+===============================================
+
+===============================================
+key file making need following below information 
+
+first and last name: Mohammad abdul malek
+name of your organizational : AL-Khalifa Restaurant & Convention Hal
+name of your organizational unit: 
+name of your City : Shayestaganj
+State or Province : Habiganj
+State or country : Bangladesh
+two-letter country code : BD
+password : MohammadAbdul123
+
+
+==================================================
+
+flutter version : 3.38.9

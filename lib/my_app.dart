@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context , child) {
+      builder: (context, child) {
         return GetMaterialApp(
           title: "Al-Khalifa Food",
           initialRoute: AppPages.INITIAL,
@@ -22,7 +22,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
             scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(surfaceTintColor: Colors.transparent),
           ),
+          builder: (context, child) {
+            return SafeArea(top: false, maintainBottomViewPadding: true, bottom: false, child: child ?? SizedBox());
+          },
         );
       },
     );

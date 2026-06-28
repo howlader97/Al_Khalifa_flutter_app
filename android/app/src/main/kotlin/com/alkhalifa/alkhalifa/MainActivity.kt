@@ -1,4 +1,4 @@
-package com.example.akflutterfoodapp
+package com.alkhalifa.alkhalifa
 
 import io.flutter.embedding.android.FlutterActivity
 

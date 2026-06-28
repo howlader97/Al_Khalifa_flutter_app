@@ -51,118 +51,31 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
+  // ignore: constant_identifier_names
   static const INITIAL = Routes.SPLASH;
 
   static final routes = [
-    GetPage(
-      name: _Paths.MAIN_DASHBOARD,
-      page: () => const MainDashboardView(),
-      binding: MainDashboardBinding(),
-    ),
-    GetPage(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-    ),
-    GetPage(
-      name: _Paths.SPLASH,
-      page: () => const SplashView(),
-      binding: SplashBinding(),
-    ),
-    GetPage(
-      name: _Paths.ONBOARDING,
-      page: () => const OnboardingView(),
-      binding: OnboardingBinding(),
-    ),
-    GetPage(
-      name: _Paths.LOGIN,
-      page: () => const LoginView(),
-      binding: LoginBinding(),
-    ),
-    GetPage(
-      name: _Paths.SIGNUP,
-      page: () => const SignUpView(),
-      binding: SignUpBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGOT_PASSWORD,
-      page: () => const ForgotPasswordView(),
-      binding: ForgotPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.OTP,
-      page: () => const OtpView(),
-      binding: OtpBinding(),
-    ),
-    GetPage(
-      name: _Paths.RESET_PASSWORD,
-      page: () => const ResetPasswordView(),
-      binding: ResetPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.PRODUCT_DETAIL,
-      page: () => const ProductDetailView(),
-      binding: ProductDetailBinding(),
-    ),
-    GetPage(
-      name: _Paths.ALL_PRODUCTS,
-      page: () => const AllProductsView(),
-      binding: AllProductsBinding(),
-    ),
-    GetPage(
-      name: _Paths.ALL_MENUS,
-      page: () => const AllMenusView(),
-      binding: AllMenusBinding(),
-    ),
-    GetPage(
-      name: _Paths.MENU_DETAIL,
-      page: () => const MenuDetailView(),
-      binding: MenuDetailBinding(),
-    ),
-    GetPage(
-      name: _Paths.CART,
-      page: () => const CartView(),
-      binding: CartBinding(),
-    ),
-    GetPage(
-      name: _Paths.CHECKOUT,
-      page: () => const CheckoutView(),
-      binding: CheckoutBinding(),
-    ),
-    GetPage(
-      name: _Paths.MY_ORDERS,
-      page: () => const MyOrdersView(),
-      binding: MyOrdersBinding(),
-    ),
-    GetPage(
-      name: _Paths.ORDER_DETAILS,
-      page: () => const OrderDetailsView(),
-      binding: OrderDetailsBinding(),
-    ),
-    GetPage(
-      name: _Paths.PROFILE,
-      page: () => const ProfileView(),
-      binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDIT_PROFILE,
-      page: () => const EditProfileView(),
-      binding: EditProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.DELETE_ACCOUNT,
-      page: () => const DeleteAccountView(),
-      binding: DeleteAccountBinding(),
-    ),
-    GetPage(
-      name: _Paths.CMS_PAGE,
-      page: () => const CmsPageView(),
-      binding: CmsPageBinding(),
-    ),
-    GetPage(
-      name: _Paths.NOTIFICATION,
-      page: () => const NotificationView(),
-      binding: NotificationBinding(),
-    ),
+    GetPage(name: _Paths.MAIN_DASHBOARD, page: () => const MainDashboardView(), binding: MainDashboardBinding()),
+    GetPage(name: _Paths.HOME, page: () => const HomeView(), binding: HomeBinding()),
+    GetPage(name: _Paths.SPLASH, page: () => const SplashView(), binding: SplashBinding()),
+    GetPage(name: _Paths.ONBOARDING, page: () => const OnboardingView(), binding: OnboardingBinding()),
+    GetPage(name: _Paths.LOGIN, page: () => const LoginView(), binding: LoginBinding()),
+    GetPage(name: _Paths.SIGNUP, page: () => const SignUpView(), binding: SignUpBinding()),
+    GetPage(name: _Paths.FORGOT_PASSWORD, page: () => const ForgotPasswordView(), binding: ForgotPasswordBinding()),
+    GetPage(name: _Paths.OTP, page: () => const OtpView(), binding: OtpBinding()),
+    GetPage(name: _Paths.RESET_PASSWORD, page: () => const ResetPasswordView(), binding: ResetPasswordBinding()),
+    GetPage(name: _Paths.PRODUCT_DETAIL, page: () => const ProductDetailView(), binding: ProductDetailBinding()),
+    GetPage(name: _Paths.ALL_PRODUCTS, page: () => const AllProductsView(), binding: AllProductsBinding()),
+    GetPage(name: _Paths.ALL_MENUS, page: () => const AllMenusView(), binding: AllMenusBinding()),
+    GetPage(name: _Paths.MENU_DETAIL, page: () => const MenuDetailView(), binding: MenuDetailBinding()),
+    GetPage(name: _Paths.CART, page: () => const CartView(), binding: CartBinding()),
+    GetPage(name: _Paths.CHECKOUT, page: () => const CheckoutView(), binding: CheckoutBinding()),
+    GetPage(name: _Paths.MY_ORDERS, page: () => const MyOrdersView(), binding: MyOrdersBinding()),
+    GetPage(name: _Paths.ORDER_DETAILS, page: () => const OrderDetailsView(), binding: OrderDetailsBinding()),
+    GetPage(name: _Paths.PROFILE, page: () => const ProfileView(), binding: ProfileBinding()),
+    GetPage(name: _Paths.EDIT_PROFILE, page: () => const EditProfileView(), binding: EditProfileBinding()),
+    GetPage(name: _Paths.DELETE_ACCOUNT, page: () => const DeleteAccountView(), binding: DeleteAccountBinding()),
+    GetPage(name: _Paths.CMS_PAGE, page: () => const CmsPageView(), binding: CmsPageBinding()),
+    GetPage(name: _Paths.NOTIFICATION, page: () => const NotificationView(), binding: NotificationBinding()),
   ];
 }

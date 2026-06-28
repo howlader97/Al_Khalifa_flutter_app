@@ -52,11 +52,11 @@ class ProfileView extends GetView<ProfileController> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: 20.h),
+                SizedBox(height: 5.h),
                 _buildProfileHeader(user),
-                SizedBox(height: 30.h),
+                SizedBox(height: 10.h),
                 _buildProfileMenu(),
-                SizedBox(height: 30.h),
+                SizedBox(height: 20.h),
                 _buildLogoutButton(),
                 SizedBox(height: 40.h),
               ],
@@ -96,9 +96,7 @@ class ProfileView extends GetView<ProfileController> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-                    ],
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
                   ),
                   child: Icon(Icons.camera_alt_outlined, size: 20.r, color: Colors.grey),
                 ),
@@ -158,19 +156,12 @@ class ProfileView extends GetView<ProfileController> {
           contentPadding: EdgeInsets.zero,
           leading: Container(
             padding: EdgeInsets.all(8.r),
-            decoration: BoxDecoration(
-              color: isDestructive ? Colors.red[50] : Colors.grey[100],
-              borderRadius: BorderRadius.circular(10.r),
-            ),
+            decoration: BoxDecoration(color: isDestructive ? Colors.red[50] : Colors.grey[100], borderRadius: BorderRadius.circular(10.r)),
             child: Icon(icon, color: isDestructive ? Colors.red : Colors.black87, size: 22.r),
           ),
           title: Text(
             title,
-            style: TextStyle(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w500,
-              color: isDestructive ? Colors.red[700] : Colors.black87,
-            ),
+            style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500, color: isDestructive ? Colors.red[700] : Colors.black87),
           ),
           trailing: Icon(Icons.arrow_forward_ios, size: 14.r, color: Colors.grey),
           onTap: onTap,
