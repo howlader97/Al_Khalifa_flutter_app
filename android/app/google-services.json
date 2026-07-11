@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "131897901103",
+    "project_id": "al-khalifa-food-app-ccc7f",
+    "storage_bucket": "al-khalifa-food-app-ccc7f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131897901103:android:87049eae453277528ac6da",
+        "android_client_info": {
+          "package_name": "com.example.akflutterfoodapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmz9kyHWXWvCzbSy1tCvzmK99WBeiZ8qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
