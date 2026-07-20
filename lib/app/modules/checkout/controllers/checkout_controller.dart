@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../cart/controllers/cart_controller.dart';
 import '../../../data/models/cart_model.dart';
@@ -49,8 +50,9 @@ class CheckoutController extends GetxController {
     try {
       dynamicDeliveryFee.value = await _deliveryFeeProvider.getLatestDeliveryFee();
     } catch (e) {
-      throw Exception(e.toString());
-
+      if (kDebugMode) {
+        print(e.toString());
+      }
     } finally {
       isLoadingFee.value = false;
     }
@@ -60,15 +62,19 @@ class CheckoutController extends GetxController {
     isLoadingAreas.value = true;
     try {
       _deliveryAreas = await _deliveryAreaProvider.getDeliveryAreas();
+      var data = await _deliveryAreaProvider.getDeliveryAreas();
+      if (kDebugMode) debugPrint(data.toString());
       cities.value = _deliveryAreas.map((e) => e.city).toList();
-      
+
       if (cities.isNotEmpty) {
         // Default to Habiganj if available
         String initialCity = cities.contains("Habiganj") ? "Habiganj" : cities.first;
         setCity(initialCity);
       }
     } catch (e) {
-      throw Exception(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     } finally {
       isLoadingAreas.value = false;
     }
@@ -102,27 +108,23 @@ class CheckoutController extends GetxController {
 
   Future<void> processCheckout() async {
     if (addressController.text.isEmpty) {
-      Get.snackbar("Error", "Please enter your full address",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Error", "Please enter your full address", backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
 
     if (cityController.text.isEmpty || locationController.text.isEmpty) {
-      Get.snackbar("Error", "Please select City and Location",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Error", "Please select City and Location", backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
 
     if (phoneController.text.isEmpty) {
-      Get.snackbar("Error", "Please enter your phone number",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Error", "Please enter your phone number", backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
 
     final token = _storage.read('access_token');
     if (token == null) {
-      Get.snackbar("Error", "Session expired. Please login again.",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Error", "Session expired. Please login again.", backgroundColor: Colors.red, colorText: Colors.white);
       Get.offAllNamed('/login');
       return;
     }
@@ -143,37 +145,42 @@ class CheckoutController extends GetxController {
       if (selectedPaymentMethod.value == "Digital Payment") {
         final paymentUrl = await _paymentProvider.initiatePayment(order['id'], token);
         if (paymentUrl != null) {
-          Get.to(() => SSLCommerzWebView(
-            paymentUrl: paymentUrl,
-            onPaymentSuccess: () async {
-              // Payment succeeded — cart is cleared on backend. Refresh & go home.
-              await cartController.fetchCart();
-              Get.offAllNamed(Routes.MAIN_DASHBOARD);
-              Get.snackbar("Success", "Payment Successful!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
-            },
-            onPaymentFailed: () {
-              // Payment failed — cart is still intact on backend. Stay on checkout.
-              Get.back(); // go back to checkout screen
-              Get.snackbar("Payment Failed", "Payment was not successful. Please try again.", backgroundColor: Colors.red, colorText: Colors.white);
-            },
-            onPaymentCancelled: () {
-              // Payment cancelled — cart is still intact on backend. Stay on checkout.
-              Get.back(); // go back to checkout screen
-              Get.snackbar("Payment Cancelled", "You cancelled the payment. Your cart is still saved.", backgroundColor: Colors.orange, colorText: Colors.white);
-            },
-          ));
+          Get.to(
+            () => SSLCommerzWebView(
+              paymentUrl: paymentUrl,
+              onPaymentSuccess: () async {
+                // Payment succeeded — cart is cleared on backend. Refresh & go home.
+                await cartController.fetchCart();
+                Get.offAllNamed(Routes.MAIN_DASHBOARD);
+                Get.snackbar("Success", "Payment Successful!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
+              },
+              onPaymentFailed: () {
+                // Payment failed — cart is still intact on backend. Stay on checkout.
+                Get.back(); // go back to checkout screen
+                Get.snackbar("Payment Failed", "Payment was not successful. Please try again.", backgroundColor: Colors.red, colorText: Colors.white);
+              },
+              onPaymentCancelled: () {
+                // Payment cancelled — cart is still intact on backend. Stay on checkout.
+                Get.back(); // go back to checkout screen
+                Get.snackbar(
+                  "Payment Cancelled",
+                  "You cancelled the payment. Your cart is still saved.",
+                  backgroundColor: Colors.orange,
+                  colorText: Colors.white,
+                );
+              },
+            ),
+          );
           return;
         }
       }
 
       // Cash payment — cart already cleared on backend, refetch and go home.
       await cartController.fetchCart();
-      Get.snackbar("Success", "Order placed successfully!",
-          backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
+      Get.snackbar("Success", "Order placed successfully!", backgroundColor: const Color(0xFF00B14F), colorText: Colors.white);
       Get.offAllNamed(Routes.MAIN_DASHBOARD);
     } catch (e) {
-      Get.snackbar("Order Error", e.toString(),
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Order Error", e.toString(), backgroundColor: Colors.red, colorText: Colors.white);
     } finally {
       isPlacingOrder.value = false;
     }

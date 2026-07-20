@@ -31,13 +31,19 @@ class CheckoutView extends GetView<CheckoutController> {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: Obx(() => _buildDropdownField("City", controller.cityController.text, controller.cities, (val) => controller.setCity(val!)))),
+                Expanded(
+                  child: Obx(() => _buildDropdownField("City", controller.cityController.text, controller.cities, (val) => controller.setCity(val!))),
+                ),
                 const SizedBox(width: 16),
-                Expanded(child: Obx(() => _buildDropdownField("Location", controller.locationController.text, controller.locations, (val) {
-                  controller.locationController.text = val!;
-                  // Force UI update
-                  controller.locations.refresh();
-                }))),
+                Expanded(
+                  child: Obx(
+                    () => _buildDropdownField("Location", controller.locationController.text, controller.locations, (val) {
+                      controller.locationController.text = val!;
+                      // Force UI update
+                      controller.locations.refresh();
+                    }),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -63,6 +69,7 @@ class CheckoutView extends GetView<CheckoutController> {
             Obx(() => _buildSummaryRow("Total", "TK ${controller.total.toStringAsFixed(0)}", isTotal: true)),
             const SizedBox(height: 40),
             _buildCheckoutButton(),
+            const SizedBox(height: 120),
           ],
         ),
       ),
@@ -70,17 +77,17 @@ class CheckoutView extends GetView<CheckoutController> {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-    );
+    return Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
   Widget _buildDropdownField(String label, String value, RxList<String> items, Function(String?) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: Colors.black87)),
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: Colors.black87),
+        ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -89,12 +96,18 @@ class CheckoutView extends GetView<CheckoutController> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: DropdownButtonHideUnderline(
-
             child: DropdownButton<String>(
               isExpanded: true,
               dropdownColor: Colors.white,
               value: items.contains(value) ? value : (items.isNotEmpty ? items.first : null),
-              items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 14)))).toList(),
+              items: items
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e, style: const TextStyle(fontSize: 14)),
+                    ),
+                  )
+                  .toList(),
               onChanged: onChanged,
             ),
           ),
@@ -107,7 +120,10 @@ class CheckoutView extends GetView<CheckoutController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: Colors.black87)),
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13, color: Colors.black87),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: textController,
@@ -143,29 +159,20 @@ class CheckoutView extends GetView<CheckoutController> {
                 height: 20,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isSelected ? const Color(0xFF006437) : Colors.grey[400]!,
-                    width: 2,
-                  ),
+                  border: Border.all(color: isSelected ? const Color(0xFF006437) : Colors.grey[400]!, width: 2),
                 ),
                 child: isSelected
                     ? Center(
                         child: Container(
                           width: 10,
                           height: 10,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF006437),
-                            shape: BoxShape.circle,
-                          ),
+                          decoration: const BoxDecoration(color: Color(0xFF006437), shape: BoxShape.circle),
                         ),
                       )
                     : null,
               ),
               const SizedBox(width: 12),
-              Text(
-                method,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              ),
+              Text(method, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -177,12 +184,10 @@ class CheckoutView extends GetView<CheckoutController> {
     final items = controller.cart?.items ?? [];
     return Column(
       children: items.map((item) {
-        final String name = item.partyMenu != null 
-            ? item.partyMenu!['title'] 
-            : (item.product != null ? item.product!['name'] : 'Unknown');
-        
-        final double price = item.variation != null 
-            ? (item.variation!['price'] as num).toDouble() 
+        final String name = item.partyMenu != null ? item.partyMenu!['title'] : (item.product != null ? item.product!['name'] : 'Unknown');
+
+        final double price = item.variation != null
+            ? (item.variation!['price'] as num).toDouble()
             : (item.partyMenu != null ? (item.partyMenu!['price'] as num).toDouble() : 0.0);
 
         return Padding(
@@ -191,7 +196,10 @@ class CheckoutView extends GetView<CheckoutController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("${item.quantity}x $name", style: TextStyle(color: Colors.grey[700], fontSize: 14)),
-              Text("Tk ${price.toStringAsFixed(0)}", style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.w500)),
+              Text(
+                "Tk ${price.toStringAsFixed(0)}",
+                style: TextStyle(color: Colors.grey[800], fontSize: 14, fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         );
@@ -213,11 +221,7 @@ class CheckoutView extends GetView<CheckoutController> {
         ),
         Text(
           value,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.w600,
-            fontSize: isTotal ? 16 : 14,
-          ),
+          style: TextStyle(color: Colors.black, fontWeight: isTotal ? FontWeight.bold : FontWeight.w600, fontSize: isTotal ? 16 : 14),
         ),
       ],
     );
@@ -226,25 +230,23 @@ class CheckoutView extends GetView<CheckoutController> {
   Widget _buildCheckoutButton() {
     return SizedBox(
       width: double.infinity,
-      child: Obx(() => ElevatedButton(
-        onPressed: controller.isPlacingOrder.value ? null : controller.processCheckout,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF006437),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          elevation: 0,
+      child: Obx(
+        () => ElevatedButton(
+          onPressed: controller.isPlacingOrder.value ? null : controller.processCheckout,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF006437),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            elevation: 0,
+          ),
+          child: controller.isPlacingOrder.value
+              ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+              : const Text(
+                  "Checkout",
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                ),
         ),
-        child: controller.isPlacingOrder.value
-            ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-              )
-            : const Text(
-                "Checkout",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-      )),
+      ),
     );
   }
 }

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "131897901103",
+    "project_id": "al-khalifa-food-app-ccc7f",
+    "storage_bucket": "al-khalifa-food-app-ccc7f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131897901103:android:fccc81367a43d5878ac6da",
+        "android_client_info": {
+          "package_name": "com.alkhalifa.alkhalifa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131897901103-2tl34ee3fukgmlcp3jah96fjl5kgnm8g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alkhalifa.alkhalifa",
+            "certificate_hash": "32932aecdcaa081fab81cac28c1b53e3e86879ca"
+          }
+        },
+        {
+          "client_id": "131897901103-fh6pd5og9pqragf47t93ar9kce7uo37i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmz9kyHWXWvCzbSy1tCvzmK99WBeiZ8qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131897901103-fh6pd5og9pqragf47t93ar9kce7uo37i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "131897901103-dcsntccefp2hifkladhljrafjbdhr89a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alkhalifa.alkhalifa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

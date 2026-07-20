@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,14 +49,12 @@ class ProductDetailView extends GetView<ProductDetailController> {
                             ],
                           ),
                           SizedBox(height: 16.h),
-                          Obx(() => Text(
-                            "Tk ${controller.selectedPrice.toStringAsFixed(0)}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.sp,
-                              color: Colors.black,
+                          Obx(
+                            () => Text(
+                              "Tk ${controller.selectedPrice.toStringAsFixed(0)}",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp, color: Colors.black),
                             ),
-                          )),
+                          ),
                           SizedBox(height: 12.h),
                           Text(
                             product['description'] ?? 'No description available.',
@@ -69,14 +65,17 @@ class ProductDetailView extends GetView<ProductDetailController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Variation", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                Text(
+                                  "Variation",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                                ),
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF1A1A1A),
-                                    borderRadius: BorderRadius.circular(8.r),
+                                  decoration: BoxDecoration(color: const Color(0xFF1A1A1A), borderRadius: BorderRadius.circular(8.r)),
+                                  child: Text(
+                                    "Required",
+                                    style: TextStyle(color: Colors.white, fontSize: 12.sp),
                                   ),
-                                  child: Text("Required", style: TextStyle(color: Colors.white, fontSize: 12.sp)),
                                 ),
                               ],
                             ),
@@ -85,67 +84,57 @@ class ProductDetailView extends GetView<ProductDetailController> {
                               style: TextStyle(color: Colors.grey, fontSize: 12.sp),
                             ),
                             SizedBox(height: 12.h),
-                            Obx(() => Column(
-                              children: variations.map<Widget>((v) {
-                                final bool isSelected = controller.selectedVariationId.value == v['id'];
-                                final double price = (v['price'] as num?)?.toDouble() ?? 0;
-                                return GestureDetector(
-                                  onTap: () => controller.selectVariation(v['id']),
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 12.h),
-                                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: isSelected ? const Color(0xFF00B14F) : Colors.grey[300]!,
-                                        width: 1.5,
+                            Obx(
+                              () => Column(
+                                children: variations.map<Widget>((v) {
+                                  final bool isSelected = controller.selectedVariationId.value == v['id'];
+                                  final double price = (v['price'] as num?)?.toDouble() ?? 0;
+                                  return GestureDetector(
+                                    onTap: () => controller.selectVariation(v['id']),
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 12.h),
+                                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: isSelected ? const Color(0xFF00B14F) : Colors.grey[300]!, width: 1.5),
+                                        borderRadius: BorderRadius.circular(10.r),
                                       ),
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 20.r,
-                                          height: 20.r,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                              color: isSelected ? const Color(0xFF00B14F) : Colors.grey[400]!,
-                                              width: 2.r,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 20.r,
+                                            height: 20.r,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(color: isSelected ? const Color(0xFF00B14F) : Colors.grey[400]!, width: 2.r),
                                             ),
-                                          ),
-                                          child: isSelected
-                                              ? Center(
-                                                  child: Container(
-                                                    width: 10.r,
-                                                    height: 10.r,
-                                                    decoration: const BoxDecoration(
-                                                      color: Color(0xFF00B14F),
-                                                      shape: BoxShape.circle,
+                                            child: isSelected
+                                                ? Center(
+                                                    child: Container(
+                                                      width: 10.r,
+                                                      height: 10.r,
+                                                      decoration: const BoxDecoration(color: Color(0xFF00B14F), shape: BoxShape.circle),
                                                     ),
-                                                  ),
-                                                )
-                                              : null,
-                                        ),
-                                        SizedBox(width: 12.w),
-                                        Expanded(
-                                          child: Text(
-                                            v['name'] ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                                  )
+                                                : null,
+                                          ),
+                                          SizedBox(width: 12.w),
+                                          Expanded(
+                                            child: Text(
+                                              v['name'] ?? '',
+                                              style: TextStyle(fontSize: 14.sp, fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Tk ${price.toStringAsFixed(0)}",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
-                                        ),
-                                      ],
+                                          Text(
+                                            "Tk ${price.toStringAsFixed(0)}",
+                                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }).toList(),
-                            )),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ],
                         ],
                       ),
@@ -167,8 +156,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
         SizedBox(
           width: double.infinity,
           height: 280.h,
-          child: product['image_url'] != null &&
-                  product['image_url'].toString().isNotEmpty
+          child: product['image_url'] != null && product['image_url'].toString().isNotEmpty
               ? Image.network(
                   product['image_url'],
                   fit: BoxFit.cover,
@@ -179,7 +167,8 @@ class ProductDetailView extends GetView<ProductDetailController> {
                 )
               : Container(
                   color: Colors.grey[200],
-                  child: Icon(Icons.image, size: 60.r, color: Colors.grey)),
+                  child: Icon(Icons.image, size: 60.r, color: Colors.grey),
+                ),
         ),
         Positioned(
           top: MediaQuery.of(Get.context!).padding.top + 8.h,
@@ -191,7 +180,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.1), blurRadius: 8.r)],
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 8.r)],
               ),
               child: Icon(Icons.arrow_back, size: 20.r, color: Colors.black),
             ),
@@ -214,52 +203,60 @@ class ProductDetailView extends GetView<ProductDetailController> {
 
   Widget _buildBottomBar() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h).copyWith(bottom: 30),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha:0.08), blurRadius: 12.r, offset: Offset(0, -2.h))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 12.r, offset: Offset(0, -2.h))],
       ),
-      child: Row(
-        children: [
-          // Quantity
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[300]!),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.remove, size: 18.r),
-                  onPressed: controller.decrementQty,
-                  constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.h),
-                ),
-                Obx(() => Text(
-                  "${controller.quantity.value}",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
-                )),
-                IconButton(
-                  icon: Icon(Icons.add, size: 18.r),
-                  onPressed: controller.incrementQty,
-                  constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.h),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: ElevatedButton(
-              onPressed: controller.addToCart,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00B14F),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-                padding: EdgeInsets.symmetric(vertical: 16.h),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            // Quantity
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]!),
+                borderRadius: BorderRadius.circular(10.r),
               ),
-              child: Text("Add to cart", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.remove, size: 18.r),
+                    onPressed: controller.decrementQty,
+                    constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.h),
+                  ),
+                  Obx(
+                    () => Text(
+                      "${controller.quantity.value}",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.add, size: 18.r),
+                    onPressed: controller.incrementQty,
+                    constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.h),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(width: 16.w),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: controller.addToCart,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00B14F),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                ),
+                child: Text(
+                  "Add to cart",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -267,7 +264,7 @@ class ProductDetailView extends GetView<ProductDetailController> {
   Widget _buildRatingStars(double rating, {double size = 12}) {
     int fullStars = rating.floor();
     bool hasHalfStar = (rating - fullStars) >= 0.5;
-    
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {

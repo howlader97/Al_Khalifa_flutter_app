@@ -38,9 +38,9 @@ class EditProfileView extends GetView<EditProfileController> {
               SizedBox(height: 20.h),
               Row(
                 children: [
-                  Expanded(child: _buildInputField("District", controller.districtController, "Dhaka")),
+                  Expanded(child: _buildInputField("District", controller.districtController, "Enter Your District")),
                   SizedBox(width: 16.w),
-                  Expanded(child: _buildInputField("City", controller.cityController, "Dhaka")),
+                  Expanded(child: _buildInputField("City", controller.cityController, "Enter Your City")),
                 ],
               ),
               SizedBox(height: 20.h),
@@ -55,7 +55,14 @@ class EditProfileView extends GetView<EditProfileController> {
     );
   }
 
-  Widget _buildInputField(String label, TextEditingController textController, String hint, {bool isReadOnly = false, TextInputType keyboardType = TextInputType.text, int maxLines = 1}) {
+  Widget _buildInputField(
+    String label,
+    TextEditingController textController,
+    String hint, {
+    bool isReadOnly = false,
+    TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

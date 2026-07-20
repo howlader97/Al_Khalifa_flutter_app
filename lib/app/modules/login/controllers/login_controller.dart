@@ -19,6 +19,7 @@ class LoginController extends GetxController {
   
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
+    serverClientId: '131897901103-fh6pd5og9pqragf47t93ar9kce7uo37i.apps.googleusercontent.com',
   );
 
   void login() async {

@@ -26,39 +26,43 @@ class NotificationView extends GetView<NotificationController> {
         ),
         centerTitle: true,
         actions: [
-          Obx(() => controller.unreadCount.value > 0
-              ? TextButton(
-                  onPressed: () => controller.markAllAsRead(),
-                  child: Text(
-                    "Mark all as read",
-                    style: TextStyle(color: const Color(0xFF006437), fontSize: 13.sp),
-                  ),
-                )
-              : const SizedBox.shrink()),
+          Obx(
+            () => controller.unreadCount.value > 0
+                ? TextButton(
+                    onPressed: () => controller.markAllAsRead(),
+                    child: Text(
+                      "Mark all as read",
+                      style: TextStyle(color: const Color(0xFF006437), fontSize: 13.sp),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value && controller.notifications.isEmpty) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFF006437)));
-        }
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.isLoading.value && controller.notifications.isEmpty) {
+            return const Center(child: CircularProgressIndicator(color: Color(0xFF006437)));
+          }
 
-        if (controller.notifications.isEmpty) {
-          return _buildEmptyState();
-        }
+          if (controller.notifications.isEmpty) {
+            return _buildEmptyState();
+          }
 
-        return RefreshIndicator(
-          onRefresh: controller.fetchNotifications,
-          color: const Color(0xFF006437),
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            itemCount: controller.notifications.length,
-            itemBuilder: (context, index) {
-              final notification = controller.notifications[index];
-              return _buildNotificationItem(notification);
-            },
-          ),
-        );
-      }),
+          return RefreshIndicator(
+            onRefresh: controller.fetchNotifications,
+            color: const Color(0xFF006437),
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 10.h),
+              itemCount: controller.notifications.length,
+              itemBuilder: (context, index) {
+                final notification = controller.notifications[index];
+                return _buildNotificationItem(notification);
+              },
+            ),
+          );
+        }),
+      ),
     );
   }
 

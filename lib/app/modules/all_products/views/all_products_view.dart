@@ -17,38 +17,44 @@ class AllProductsView extends GetView<AllProductsController> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Get.back(),
         ),
-        title: Obx(() => Text(
-          controller.title.value,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+        title: Obx(
+          () => Text(
+            controller.title.value,
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
           ),
-        )),
+        ),
         centerTitle: false,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFF00B14F)));
-        }
-        if (controller.products.isEmpty) {
-          return const Center(child: Text("No products found"));
-        }
-        return GridView.builder(
-          padding: const EdgeInsets.all(16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 0.75,
-          ),
-          itemCount: controller.products.length,
-          itemBuilder: (context, index) {
-            final product = controller.products[index];
-            return _buildProductCard(context, product);
-          },
-        );
-      }),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator(color: Color(0xFF00B14F)));
+          }
+          if (controller.products.isEmpty) {
+            return const Center(child: Text("No products found"));
+          }
+          return RefreshIndicator(
+            onRefresh: () async {
+              await controller.onAppInitial();
+            },
+            child: GridView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 0.75,
+              ),
+              itemCount: controller.products.length,
+              itemBuilder: (context, index) {
+                final product = controller.products[index];
+                return _buildProductCard(context, product);
+              },
+            ),
+          );
+        }),
+      ),
     );
   }
 
@@ -56,26 +62,15 @@ class AllProductsView extends GetView<AllProductsController> {
     final String imageUrl = product['image_url'] as String? ?? '';
     final String name = product['name'] as String? ?? '';
     final List variations = product['variations'] as List? ?? [];
-    final double price = variations.isNotEmpty
-        ? (variations.first['price'] as num?)?.toDouble() ?? 0
-        : 0;
+    final double price = variations.isNotEmpty ? (variations.first['price'] as num?)?.toDouble() ?? 0 : 0;
 
     return GestureDetector(
-      onTap: () => Get.toNamed(
-        Routes.PRODUCT_DETAIL,
-        arguments: {'id': product['id']},
-      ),
+      onTap: () => Get.toNamed(Routes.PRODUCT_DETAIL, arguments: {'id': product['id']}),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha:0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,10 +100,7 @@ class AllProductsView extends GetView<AllProductsController> {
                     right: 8,
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF00B14F),
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(color: Color(0xFF00B14F), shape: BoxShape.circle),
                       child: const Icon(Icons.add, color: Colors.white, size: 20),
                     ),
                   ),
@@ -122,10 +114,7 @@ class AllProductsView extends GetView<AllProductsController> {
                 children: [
                   Text(
                     name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -134,20 +123,13 @@ class AllProductsView extends GetView<AllProductsController> {
                     children: [
                       _buildRatingStars((product['rating'] as num?)?.toDouble() ?? 5.0, size: 14),
                       const SizedBox(width: 4),
-                      Text(
-                        "(${(product['review_count'] ?? 0)})",
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
+                      Text("(${(product['review_count'] ?? 0)})", style: const TextStyle(fontSize: 12, color: Colors.grey)),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
                     "Tk ${price.toStringAsFixed(0)}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
                   ),
                 ],
               ),
@@ -161,7 +143,7 @@ class AllProductsView extends GetView<AllProductsController> {
   Widget _buildRatingStars(double rating, {double size = 12}) {
     int fullStars = rating.floor();
     bool hasHalfStar = (rating - fullStars) >= 0.5;
-    
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {
