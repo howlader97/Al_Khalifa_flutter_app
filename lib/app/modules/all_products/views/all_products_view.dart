@@ -140,6 +140,8 @@ class AllProductsView extends GetView<AllProductsController> {
     );
   }
 
+
+
   Widget _buildRatingStars(double rating, {double size = 12}) {
     int fullStars = rating.floor();
     bool hasHalfStar = (rating - fullStars) >= 0.5;
